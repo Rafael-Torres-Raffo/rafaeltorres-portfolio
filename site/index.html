@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rafael Torres — Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F7F9FC;
+    --bg-panel: #FFFFFF;
+    --bg-panel-2: #EEF2F8;
+    --copper: #2E55D9;
+    --copper-bright: #3D6BFF;
+    --silk: #111826;
+    --silk-dim: #4B5567;
+    --silk-dimmer: #8993A6;
+    --line: rgba(17,24,38,0.10);
+    --line-bright: rgba(61,107,255,0.40);
+    --success: #16A34A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(61,107,255,0.07), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 20%, rgba(22,163,74,0.05), transparent 60%),
+      var(--bg);
+    color:var(--silk);
+    font-family:'IBM Plex Sans', sans-serif;
+    min-height:100vh;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+
+  /* ---- background trace texture ---- */
+  .pcb-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.5;
+  }
+
+  /* ---- nav ---- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,249,252,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1160px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:17px;
+    letter-spacing:0.02em; color:var(--silk); text-decoration:none;
+    display:flex; align-items:center; gap:10px; white-space:nowrap; flex-shrink:0;
+  }
+  .logo .chip{
+    width:9px; height:9px; border-radius:2px; background:var(--copper-bright);
+    box-shadow:0 0 8px rgba(61,107,255,0.55);
+  }
+  .logo .sub{color:var(--silk-dimmer); font-weight:400; font-size:12px; font-family:'IBM Plex Mono'; white-space:nowrap;}
+  nav{overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none;}
+  nav::-webkit-scrollbar{display:none;}
+  nav ul{list-style:none; display:flex; gap:2px; flex-wrap:nowrap;}
+  nav a{
+    color:var(--silk-dim); text-decoration:none; font-size:13px; font-family:'IBM Plex Mono';
+    padding:8px 11px; border-radius:3px; transition:all .18s ease; letter-spacing:0.02em;
+    border:1px solid transparent; text-transform:uppercase; white-space:nowrap;
+  }
+  nav a:hover{color:var(--silk); background:rgba(61,107,255,0.07); border-color:var(--line-bright);}
+  nav a.active{color:var(--copper-bright); border-color:var(--line-bright); background:rgba(61,107,255,0.09);}
+
+  main{position:relative; z-index:1;}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ================= HOME ================= */
+  .hero{
+    max-width:1160px; margin:0 auto; padding:90px 32px 60px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono'; font-size:12px; color:var(--copper-bright);
+    letter-spacing:0.12em; text-transform:uppercase; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:22px; height:1px; background:var(--copper-bright);}
+  h1{
+    font-family:'Space Grotesk'; font-weight:700; font-size:44px; line-height:1.12;
+    letter-spacing:-0.01em; margin-bottom:22px;
+  }
+  h1 .accent{color:var(--copper-bright);}
+  .lede{color:var(--silk-dim); font-size:16.5px; line-height:1.65; max-width:520px; margin-bottom:30px;}
+  .hero-meta{display:flex; gap:28px; font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--silk-dimmer);}
+  .hero-meta div{display:flex; flex-direction:column; gap:4px;}
+  .hero-meta span{color:var(--silk); font-size:13px;}
+
+  .schematic{
+    aspect-ratio:1/1; border:1px solid var(--line); border-radius:6px;
+    background:var(--bg-panel); position:relative; overflow:hidden;
+  }
+  .schematic svg{width:100%; height:100%;}
+
+  .section-label{
+    max-width:1160px; margin:0 auto; padding:0 32px;
+    display:flex; align-items:baseline; gap:14px; margin-bottom:28px;
+  }
+  .section-label h2{font-family:'Space Grotesk'; font-size:22px; font-weight:600;}
+  .section-label .count{font-family:'IBM Plex Mono'; font-size:12px; color:var(--silk-dimmer);}
+  .section-label .rule{flex:1; height:1px; background:var(--line);}
+
+  .projects{
+    max-width:1160px; margin:0 auto 100px; padding:0 32px;
+    display:grid; grid-template-columns:repeat(2,1fr); gap:18px;
+  }
+  .card{
+    border:1px solid var(--line); border-radius:6px; background:var(--bg-panel);
+    padding:26px; position:relative; overflow:hidden; transition:border-color .2s ease, transform .2s ease;
+    cursor:pointer;
+  }
+  .card::before{
+    content:''; position:absolute; top:0; left:0; width:100%; height:2px;
+    background:linear-gradient(90deg, var(--copper), transparent);
+    opacity:0; transition:opacity .2s ease;
+  }
+  .card:hover{border-color:var(--line-bright); transform:translateY(-2px);}
+  .card:hover::before{opacity:1;}
+  .card .pin{
+    font-family:'IBM Plex Mono'; font-size:11px; color:var(--copper-bright);
+    letter-spacing:0.08em; margin-bottom:12px; display:flex; align-items:center; gap:8px;
+  }
+  .card .pin .dot{width:6px; height:6px; border-radius:50%; background:var(--copper-bright);}
+  .card h3{font-family:'Space Grotesk'; font-size:19px; margin-bottom:8px; font-weight:600;}
+  .card p{color:var(--silk-dim); font-size:13.5px; line-height:1.55; margin-bottom:16px;}
+  .card .tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+  .card .tag, .tags .tag{
+    font-family:'IBM Plex Mono'; font-size:10.5px; color:var(--silk-dimmer);
+    border:1px solid var(--line); padding:3px 8px; border-radius:3px;
+  }
+  .tags{display:flex; flex-wrap:wrap; gap:6px;}
+  .card .cta{font-family:'IBM Plex Mono'; font-size:12px; color:var(--silk-dimmer);}
+  .card.locked{cursor:default; opacity:0.55;}
+  .card.locked:hover{transform:none; border-color:var(--line);}
+  .card.locked:hover::before{opacity:0;}
+  .card .status{
+    position:absolute; top:22px; right:22px; font-family:'IBM Plex Mono'; font-size:10px;
+    color:var(--silk-dimmer); border:1px dashed var(--line); padding:3px 8px; border-radius:20px;
+  }
+  .card.featured .status{color:var(--success); border-color:rgba(22,163,74,0.35);}
+
+  footer{
+    max-width:1160px; margin:0 auto; padding:30px 32px 60px;
+    color:var(--silk-dimmer); font-family:'IBM Plex Mono'; font-size:12px;
+    display:flex; justify-content:space-between; border-top:1px solid var(--line);
+  }
+
+  /* ================= PROJECT PAGE ================= */
+  .proj-hero{position:relative; height:56vh; min-height:420px; overflow:hidden;}
+  .proj-hero img{width:100%; height:100%; object-fit:cover;}
+  .proj-hero .scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(247,249,252,0) 0%, rgba(247,249,252,0) 52%, rgba(247,249,252,0.55) 72%, rgba(247,249,252,0.92) 88%, rgba(247,249,252,0.98) 100%);
+  }
+  .proj-hero-content{
+    text-shadow:0 1px 2px rgba(255,255,255,0.5);
+  }
+  .proj-hero-content{
+    position:absolute; bottom:0; left:0; right:0; max-width:1160px; margin:0 auto;
+    padding:0 32px 40px;
+  }
+  .back-link{
+    font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--silk-dim); text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px; margin-bottom:18px;
+  }
+  .back-link:hover{color:var(--copper-bright);}
+  .badge-row{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .badge{
+    font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.04em;
+    padding:5px 11px; border-radius:20px; border:1px solid;
+  }
+  .badge.award{color:#92400E; border-color:rgba(180,83,9,0.35); background:rgba(217,119,6,0.08);}
+  .badge.meta{color:var(--silk-dim); border-color:var(--line);}
+  .proj-hero-content h1{font-size:38px; margin-bottom:6px;}
+  .proj-hero-content .subtitle{color:var(--silk-dim); font-size:15px; max-width:600px;}
+  .hero-tag{
+    position:absolute; z-index:5; font-family:'IBM Plex Mono'; font-size:12px; color:#fff;
+    background:rgba(10,16,26,0.7); border:1px solid rgba(255,255,255,0.25); padding:5px 12px;
+    border-radius:20px; backdrop-filter:blur(4px); letter-spacing:0.02em;
+  }
+  .theme-tag{color:var(--silk-dimmer); font-weight:400; font-size:0.6em; vertical-align:middle;}
+
+  .theme-card{
+    display:flex; gap:20px; align-items:center; border:1px solid var(--line);
+    border-radius:6px; padding:20px; background:var(--bg-panel); margin:24px 0;
+  }
+  .theme-card img{width:74px; height:74px; border-radius:50%; flex-shrink:0; border:1px solid var(--line-bright);}
+  .theme-card p{margin:0; font-size:13.5px; color:var(--silk-dim); line-height:1.6;}
+  .theme-card .t-label{font-family:'IBM Plex Mono'; font-size:11px; color:var(--copper-bright); margin-bottom:6px; letter-spacing:0.04em;}
+  .contact-wrap{max-width:480px; margin:24px auto 40px; text-align:center;}
+  .contact-photo{width:150px; height:150px; border-radius:50%; object-fit:cover; border:2px solid var(--line-bright); margin:0 auto 22px; display:block;}
+  .contact-monogram{
+    width:150px; height:150px; border-radius:50%; margin:0 auto 22px; display:flex; align-items:center; justify-content:center;
+    background:var(--bg-panel-2); border:2px dashed var(--line-bright); font-family:'IBM Plex Mono'; font-size:32px; color:var(--copper-bright);
+  }
+  .contact-name{font-size:26px; font-weight:700; color:var(--silk); margin-bottom:4px;}
+  .contact-title{font-family:'IBM Plex Mono'; font-size:13px; color:var(--silk-dimmer); margin-bottom:28px; letter-spacing:0.03em;}
+
+  .proj-body{max-width:820px; margin:0 auto; padding:64px 32px 120px;}
+  .proj-body h2{font-family:'Space Grotesk'; font-size:24px; margin:56px 0 18px; font-weight:600;}
+  .proj-body h2:first-child{margin-top:0;}
+  .proj-body p{color:var(--silk-dim); font-size:15.5px; line-height:1.75; margin-bottom:16px;}
+  .proj-body strong{color:var(--silk); font-weight:600;}
+
+  .quote-block{
+    border-left:2px solid var(--copper); background:var(--bg-panel-2);
+    padding:18px 22px; border-radius:0 4px 4px 0; margin:24px 0;
+  }
+  .quote-block p{color:var(--silk); font-style:italic; font-size:14.5px; margin:0;}
+  .quote-block .cite{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--silk-dimmer); margin-top:10px; font-style:normal;}
+
+  .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden; margin:28px 0;}
+  .stat{background:var(--bg-panel); padding:18px 16px;}
+  .stat .num{font-family:'Space Grotesk'; font-size:20px; color:var(--copper-bright); font-weight:600;}
+  .stat .label{font-family:'IBM Plex Mono'; font-size:11px; color:var(--silk-dimmer); margin-top:4px;}
+
+  .caption{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--silk-dimmer); margin-top:8px;}
+
+  .learn-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0;}
+  .learn-card{border:1px solid var(--line); border-radius:6px; padding:18px; background:var(--bg-panel);}
+  .learn-card .n{font-family:'IBM Plex Mono'; font-size:11px; color:var(--copper-bright); margin-bottom:8px;}
+  .learn-card p{font-size:13.5px; margin:0; color:var(--silk-dim);}
+
+  .img-row{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:24px 0;}
+  .img-row img, .full-img img{width:100%; border-radius:6px; border:1px solid var(--line); display:block;}
+  .full-img{margin:24px 0;}
+
+  .video-links{display:flex; flex-direction:column; gap:10px; margin:20px 0;}
+  .video-link{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    border:1px solid var(--line); border-radius:6px; padding:14px 18px; text-decoration:none;
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .video-link:hover{border-color:var(--line-bright); background:rgba(61,107,255,0.05);}
+  .video-link .vt{color:var(--silk); font-size:14px;}
+  .video-link .vd{color:var(--silk-dimmer); font-size:12.5px; margin-top:2px;}
+  .video-link .ts{font-family:'IBM Plex Mono'; font-size:12px; color:var(--copper-bright); white-space:nowrap;}
+
+  /* ---- mechanism panel v2 ---- */
+  .mech-panel{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:24px 0;}
+  .mech-diagram{position:relative;}
+  #connectorSvg{position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:6; overflow:visible;}
+  .mech-photo{position:relative; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--bg-panel);}
+  .mech-photo img{width:100%; aspect-ratio:3/4; height:auto; object-fit:cover; display:block;}
+  .roller-dot{
+    position:absolute; left:50%; top:43%; width:14px; height:14px; transform:translate(-50%,-50%);
+    border-radius:50%; background:rgba(61,107,255,0.28); border:2px solid var(--copper-bright); z-index:2;
+    box-shadow:0 0 0 4px rgba(10,16,26,0.35), 0 0 10px rgba(61,107,255,0.55);
+  }
+  .parts-diagram{max-width:600px; margin:24px auto; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--bg-panel);}
+  .parts-diagram svg{width:100%; height:auto; display:block;}
+  .component-legend{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:28px 0;}
+  .cl-item{border:1px solid var(--line); border-radius:6px; padding:14px 16px; background:var(--bg-panel);}
+  .cl-item .cl-name{font-family:'IBM Plex Mono'; font-size:12px; color:var(--copper-bright); margin-bottom:6px; letter-spacing:0.03em;}
+  .cl-item p{margin:0; font-size:13px; color:var(--silk-dim); line-height:1.55;}
+  .video-slot{
+    border:1.5px dashed var(--line-bright); border-radius:6px; padding:22px 20px; margin:22px 0;
+    background:var(--bg-panel-2); text-align:center;
+  }
+  .video-slot .vs-icon{font-size:20px; margin-bottom:8px;}
+  .video-slot .vs-label{font-family:'IBM Plex Mono'; font-size:11px; color:var(--copper-bright); letter-spacing:0.04em; margin-bottom:4px;}
+  .video-slot p{margin:0; font-size:13px; color:var(--silk-dim);}
+  .mech-photo .mp-label{
+    position:absolute; top:10px; left:10px; font-family:'IBM Plex Mono'; font-size:10.5px;
+    color:#fff; background:rgba(10,16,26,0.72); border:1px solid rgba(255,255,255,0.25);
+    padding:3px 9px; border-radius:20px; letter-spacing:0.03em;
+  }
+  .annotation{
+    position:relative; border:1px solid var(--line-bright); border-radius:6px; background:var(--bg-panel-2);
+    padding:18px 20px 18px 26px; margin:0 0 6px;
+  }
+  .annotation::before{
+    content:''; position:absolute; left:-1px; top:0; bottom:0; width:3px;
+    background:linear-gradient(180deg, var(--copper-bright), var(--copper));
+    border-radius:3px 0 0 3px;
+  }
+  .annotation .a-arrow{
+    font-family:'IBM Plex Mono'; color:var(--copper-bright); font-size:12px; margin-bottom:6px; letter-spacing:0.03em;
+  }
+  .annotation p{margin:0; font-size:13.5px; color:var(--silk-dim); line-height:1.65;}
+  .annotation p + p{margin-top:10px;}
+
+  .inspo-row{
+    display:flex; gap:16px; align-items:center; border:1px solid var(--line); border-radius:6px;
+    padding:16px; background:var(--bg-panel); margin:20px 0;
+  }
+  .inspo-row img{width:150px; height:110px; object-fit:cover; border-radius:4px; flex-shrink:0; border:1px solid var(--line);}
+  .inspo-row .i-label{font-family:'IBM Plex Mono'; font-size:11px; color:var(--copper-bright); margin-bottom:6px; letter-spacing:0.04em;}
+  .inspo-row p{margin:0; font-size:13.5px; color:var(--silk-dim); line-height:1.6;}
+
+  /* ---- build grid v2 ---- */
+  .build-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:24px 0;}
+  .build-item{border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--bg-panel);}
+  .build-item img{width:100%; height:210px; object-fit:contain; background:var(--bg-panel-2); display:block;}
+  .build-item .bi-cap{padding:10px 12px; font-family:'IBM Plex Mono'; font-size:11px; color:var(--silk-dimmer); border-top:1px solid var(--line);}
+
+  /* ---- team/recognition v2 ---- */
+  .recognition-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; align-items:stretch;}
+  .cert-frame{border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; background:var(--bg-panel-2);}
+  .cert-frame img{width:100%; flex:1; object-fit:contain; display:block; min-height:220px; padding:10px; box-sizing:border-box;}
+  .cert-frame .tf-cap{padding:14px 16px; font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--silk-dimmer); border-top:1px solid var(--line); line-height:1.6;}
+  .team-frame{border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column;}
+  .team-frame img{width:100%; flex:1; object-fit:cover; display:block; min-height:220px;}
+  .team-frame .tf-cap{padding:14px 16px; font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--silk-dimmer); border-top:1px solid var(--line); line-height:1.6;}
+
+  .tradition-note{
+    border:1px solid var(--line); border-left:2px solid var(--copper); border-radius:0 6px 6px 0;
+    padding:16px 20px; background:var(--bg-panel-2); margin:18px 0 24px;
+  }
+  .tradition-note .tn-label{font-family:'IBM Plex Mono'; font-size:11px; color:var(--copper-bright); margin-bottom:6px; letter-spacing:0.04em;}
+  .tradition-note p{margin:0; font-size:13.5px; color:var(--silk-dim); line-height:1.6;}
+
+  @media(max-width:820px){
+    .mech-panel, .recognition-row, .build-grid, .component-legend{grid-template-columns:1fr;}
+  }
+
+  @media(max-width:820px){
+    .hero{grid-template-columns:1fr; padding-top:50px;}
+    .projects, .learn-grid, .img-row{grid-template-columns:1fr;}
+    h1{font-size:32px;}
+    .proj-hero-content h1{font-size:28px;}
+    .stat-grid{grid-template-columns:1fr;}
+    .logo .sub{display:none;}
+    .nav-inner{gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="showView('home');return false;">
+      <span class="chip"></span>RAFAEL TORRES <span class="sub">// ECE + ROBOTICS</span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#" onclick="showView('home');return false;" id="nav-home" class="active">index</a></li>
+        <li><a href="#" onclick="showView('robotathon');return false;" id="nav-robotathon">robotathon</a></li>
+        <li><a href="#" onclick="showView('ascend');return false;" id="nav-ascend">ascend</a></li>
+        <li><a href="#" onclick="showView('fri1');return false;" id="nav-fri1">fri 1</a></li>
+        <li><a href="#" onclick="showView('fri2');return false;" id="nav-fri2">fri 2</a></li>
+        <li><a href="#" onclick="showView('memory');return false;" id="nav-memory">memory</a></li>
+        <li><a href="#" onclick="showView('connect4');return false;" id="nav-connect4">connect4</a></li>
+        <li><a href="#" onclick="showView('about');return false;" id="nav-about">about</a></li>
+        <li><a href="#" onclick="showView('contact');return false;" id="nav-contact">contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HOME VIEW ============ -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Rising Junior · UT Austin</div>
+        <h1>Building systems that let robots <span class="accent">sense, decide, and act.</span></h1>
+        <p class="lede">Electrical & Computer Engineering student with a Robotics minor at UT Austin. This is a running log of what I've built: mechanical, electrical, and everything soldered or scripted in between.</p>
+        <div class="hero-meta">
+          <div>MAJOR<span>ECE, Robotics Minor</span></div>
+          <div>FOCUS<span>Embedded systems, manipulation</span></div>
+          <div>BASED<span>Austin, TX</span></div>
+        </div>
+      </div>
+      <div class="schematic">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="traceGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#2E55D9" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#3D6BFF" stop-opacity="0.25"/>
+            </linearGradient>
+          </defs>
+          <rect width="300" height="300" fill="#EEF2F8"/>
+          <g stroke="rgba(17,24,38,0.08)" stroke-width="1">
+            <path d="M0 40 H300 M0 100 H300 M0 160 H300 M0 220 H300"/>
+            <path d="M40 0 V300 M100 0 V300 M160 0 V300 M220 0 V300"/>
+          </g>
+          <g stroke="url(#traceGrad)" stroke-width="2" fill="none" stroke-linecap="round">
+            <path d="M40 40 H160 V100 H260" id="trace1"/>
+            <path d="M40 220 H100 V160 H220 V220 H260" id="trace2"/>
+            <path d="M100 40 V100 H40 V160" id="trace3"/>
+          </g>
+          <g fill="#3D6BFF">
+            <circle cx="40" cy="40" r="4"/>
+            <circle cx="160" cy="40" r="4"/>
+            <circle cx="260" cy="100" r="4"/>
+            <circle cx="40" cy="220" r="4"/>
+            <circle cx="260" cy="220" r="4"/>
+            <circle cx="100" cy="40" r="4"/>
+            <circle cx="40" cy="160" r="4"/>
+          </g>
+          <rect x="120" y="120" width="60" height="60" rx="4" fill="#111826" stroke="#2E55D9" stroke-width="1.5"/>
+          <text x="150" y="155" text-anchor="middle" fill="#3D6BFF" font-family="IBM Plex Mono" font-size="10">RT</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="section-label">
+      <h2>Projects</h2>
+      <span class="count">06 / 06</span>
+      <div class="rule"></div>
+    </div>
+
+    <div class="projects">
+      <div class="card featured" onclick="showView('robotathon')">
+        <div class="status">complete</div>
+        <div class="pin"><span class="dot"></span>FALL 2024 · IEEE RAS</div>
+        <h3>Robotathon — Team Gordon Ratzky</h3>
+        <p>First-semester build: a ping-pong-ball collection robot with a rubber-band roller intake inspired by tennis ball hoppers. Won Best Mechanical Design.</p>
+        <div class="tags"><span class="tag">ESP32</span><span class="tag">Bluepad32</span><span class="tag">Mechanical Design</span><span class="tag">Line Following</span></div>
+        <div class="cta">View project →</div>
+      </div>
+
+      <div class="card featured" onclick="showView('ascend')">
+        <div class="status">in progress</div>
+        <div class="pin"><span class="dot"></span>SEP 2025 – PRESENT · ASCEND</div>
+        <h3>ASCEND — A-150</h3>
+        <p>Built the brake-control "muscles and nerves" for an autonomous emergency-response paraglider drone. GoAERO Prize Stage 1 winner, NASA-recognized.</p>
+        <div class="tags"><span class="tag">Raspberry Pi 5</span><span class="tag">PID Control</span><span class="tag">Analog Signal Chain</span></div>
+        <div class="cta">View project &rarr;</div>
+      </div>
+
+      <div class="card featured" onclick="showView('fri1')">
+        <div class="status">in progress</div>
+        <div class="pin"><span class="dot"></span>SPRING 2025 &middot; FRI / ROBIN LAB</div>
+        <h3>FRI 1 &mdash; Instruction Clarity</h3>
+        <p>What FRI is, how the Robot Learning stream works, and a Spring 2025 paper on instruction clarity in a generalist robot policy.</p>
+        <div class="tags"><span class="tag">&pi;0 / VLA Policy</span><span class="tag">LIBERO</span><span class="tag">LLM Disambiguation</span></div>
+        <div class="cta">View project &rarr;</div>
+      </div>
+
+      <div class="card featured" onclick="showView('fri2')">
+        <div class="status">in progress</div>
+        <div class="pin"><span class="dot"></span>FALL 2025 &middot; FRI / ROBIN LAB</div>
+        <h3>FRI 2 &mdash; SawyerRoll</h3>
+        <p>The second semester's mechanical and RL project under Professor Xu, and how it led directly to the Memory Research invitation.</p>
+        <div class="tags"><span class="tag">Robosuite / MuJoCo</span><span class="tag">Imitation Learning</span><span class="tag">Mechanical Design</span></div>
+        <div class="cta">View project &rarr;</div>
+      </div>
+
+      <div class="card featured" onclick="showView('memory')">
+        <div class="status">in progress</div>
+        <div class="pin"><span class="dot"></span>SPRING 2026 · LEARNING AGENTS RESEARCH GROUP</div>
+        <h3>Memory Research</h3>
+        <p>Solo research invited by Professor Junhong Xu: dynamic goal injection for interactive long-horizon manipulation in ManiSkill-HAB.</p>
+        <div class="tags"><span class="tag">Long-Horizon Planning</span><span class="tag">ManiSkill-HAB</span><span class="tag">LLM Task Parsing</span></div>
+        <div class="cta">View project &rarr;</div>
+      </div>
+
+      <div class="card featured" onclick="showView('connect4')">
+        <div class="status">in progress</div>
+        <div class="pin"><span class="dot"></span>JAN – MAY 2025 · ECE 319K</div>
+        <h3>Connect 4 &mdash; Embedded Systems</h3>
+        <p>A full-system embedded build on a TI LaunchPad: LCD graphics, sampled sound, interrupts, and a bilingual UI, engineered from scratch.</p>
+        <div class="tags"><span class="tag">C</span><span class="tag">Interrupts</span><span class="tag">TI MSPM0G3507</span></div>
+        <div class="cta">View project &rarr;</div>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Rafael Torres</span>
+      <span>DRAFT MOCKUP: content in progress</span>
+    </footer>
+  </section>
+
+  <section class="view" id="view-ascend">
+    <div class="proj-hero">
+      <img src="assets/ascend/cad-final.jpg" alt="CAD render of the A-150 paramotor drone under its parafoil wing">
+      <div class="scrim"></div>
+      <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+        <div class="badge-row">
+          <span class="badge award">★ GoAERO Stage 1 Winner</span>
+          <span class="badge meta">NASA-Recognized</span>
+          <span class="badge meta">Sep 2025 &ndash; Present</span>
+        </div>
+        <h1 class="display">ASCEND <span class="theme-tag">&mdash; A-150</span></h1>
+        <p class="subtitle">Building the brake-control "muscles and nerves" for an autonomous emergency-response paraglider drone.</p>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <h2>The challenge</h2>
+      <p>ASCEND, short for <strong>A</strong>erial <strong>S</strong>olutions for <strong>C</strong>ombatting <strong>E</strong>mergencies and <strong>N</strong>atural <strong>D</strong>isasters, is competing in the <strong>GoAERO Prize</strong>, a $2M+, three-year global competition backed by NASA, Boeing, RTX, and Honeywell, aimed at building the world's first <strong>autonomy-enabled, portable Emergency Response Flyer</strong>. The vehicle has to be uncrewed, roadable enough for a first responder to drive it to a disaster site, and capable of vertical takeoff and landing from terrain that regular vehicles can't reach: sand, slopes, wet ground, tight spaces.</p>
+      <p>The competition runs in three stages: a technical-paper "paper stage," a building phase requiring a working subscale or full-scale flyer, and a Final Fly-Off in February 2027 where surviving teams fly real emergency-response missions judged on <strong>Productivity</strong> (ferrying 700+ lb of cumulative payload), <strong>Adversity</strong> (takeoff/landing cycles from rough terrain), and <strong>Maneuvering</strong> (a slalom/obstacle course with spot landings), all built around a standardized 165cm, 120lb test payload nicknamed "Alex."</p>
+      <p>ASCEND's entry, the <strong>A-150</strong>, is a paramotor drone: a wheeled, ATV-style chassis flown under a steerable parafoil wing, designed to perform heavy-lift, long-range cargo operations cheaply from unimproved terrain. Out of more than 1,400 innovators from 85 countries, ASCEND was selected as one of just <strong>22 Stage 1 winning teams</strong> worldwide, and separately recognized with a <strong>US University Innovation Award, with support from NASA</strong>. The team is based at UT Austin under faculty advisor <strong>Christian Claudel</strong>.</p>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">22</div><div class="label">STAGE 1 WINNERS, OF 1,400+ TEAMS</div></div>
+        <div class="stat"><div class="num">$2M+</div><div class="label">TOTAL COMPETITION PRIZE POOL</div></div>
+        <div class="stat"><div class="num">Feb '27</div><div class="label">FINAL FLY-OFF AT NASA AMES</div></div>
+      </div>
+
+      <h2>Who we are</h2>
+      <p>ASCEND is a group of undergrads working together with a team of faculty advisors to build an autonomous flying ATV for emergency response.</p>
+      <div class="theme-card">
+        <div>
+          <div class="t-label">MISSION</div>
+          <p>Empower our members by providing opportunities to enhance their technical skills and create impactful products that make a positive difference in people's lives.</p>
+        </div>
+      </div>
+      <div class="theme-card">
+        <div>
+          <div class="t-label">VISION</div>
+          <p>Developing an easy-to-manufacture, affordable prototype that excels in every standard of maneuvering and deploying, to establish a presence in the emergency response world and change lives.</p>
+        </div>
+      </div>
+
+      <h2>My role</h2>
+      <p>I'm an <strong>Electrical Engineer within the Electrical Team</strong>. Over the 2025&ndash;2026 school year, I built both halves of the paraglider's brake-control system largely on my own: the actuators that physically pull the brake lines, and the sensors that measure what those lines are actually doing in real time. Together, these are the muscles and the nerves that let the aircraft control its own parafoil during flight, with no human pilot.</p>
+      <p>Both systems started from inherited hardware that didn't work at all (no wiring, no documentation, no working code) and ended the year as working, tested, documented systems.</p>
+
+      <h2>System 1: The actuator system (the "muscles")</h2>
+      <p><strong>Starting point (Fall 2025):</strong> a prior capstone team left behind an Orca-6-48V linear actuator that wasn't wired to power or control electronics, an unconnected battery harness, and a single spec/setup PDF. No working code, no documentation.</p>
+      <p>I brought it back from nothing, in order: connected the batteries and USB serial so the actuator software could even recognize the hardware, then hit an unresponsive actuator and isolated the fault by elimination. I swapped computers first to rule out software, narrowed it to a voltage issue, and traced that to poorly soldered wire connections. Desoldered, recoiled, resoldered, and heat-pressed the joints for safety.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; DEBUGGING APPROACH</div>
+        <p>This elimination-based method (rule out the biggest, easiest variable first, then narrow down systematically) became my default approach for the rest of the year, on both systems.</p>
+      </div>
+
+      <p>From there: read through the inherited code function by function since it was poorly commented and couldn't run both actuators simultaneously, then built my own wiring schematic that actually matched what the code expected, rather than trusting either the code or the existing wiring on its own. Resolved illegible, unlabeled load-cell GPIO pins empirically, through trial rather than guesswork. Found that one actuator only registered movement in one direction, which caused it to max out, and dug into the Orca SDK and documentation to understand the root cause.</p>
+
+      <p><strong>January 2026:</strong> after winter break, one actuator lost proper voltage again, the same symptom as the fall issue. Rather than assuming it was the same solder problem, I treated it as a potentially different root cause. It turned out to be a blown fuse, not a wiring fault.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; BUILDING FOR MAINTAINABILITY</div>
+        <p>Instead of just fixing it and moving on, I installed inline test switches so voltage can be measured before it ever reaches the actuators. That means any future recurrence of this symptom is a seconds-long diagnosis instead of an hours-long one. That's the difference between repairing a system and engineering it to stay repairable.</p>
+      </div>
+
+      <p>With the hardware solid, I wrote the actual control software using the Orca SDK:</p>
+      <ul>
+        <li>Synchronized dual-motor control, not lockstep, since the left and right brake lines sometimes need to move in <em>opposite</em> directions to steer</li>
+        <li>A hand-tuned PID position controller</li>
+        <li>Manual homing and software travel limits</li>
+        <li>Retry logic on motion triggers, with fail-safe auto-park/shutdown on quit or crash</li>
+        <li>A separate interactive jog/calibration tool with variable step sizes, used to empirically find the actuators' true mechanical limits with a safety buffer built in</li>
+      </ul>
+      <p>By April 2026, the result was a fully working, verified, closed-loop dual-actuator system: built from wiring that didn't exist and code that didn't run, to a system that reliably commands both brake lines with software safety limits.</p>
+
+      <h2>System 2: The load cell system (the "nerves")</h2>
+      <p>Once the actuators worked, the next problem was obvious: they can move to a commanded position, but they have no idea what the wing is actually doing. A parafoil has no rigid frame. It's held in shape entirely by air pressure. If a cell loses pressure, that section collapses, and the aircraft can lose lift asymmetrically or enter an unstable descent, fast. The only way to catch that in time is to sense it through brake-line tension, the same way a human paraglider pilot feels it through their hands.</p>
+
+      <p><strong>Hardware chain:</strong> two 500kg PSD-S1 S-type load cells &rarr; AD620 instrumentation amplifier modules &rarr; ADS1256 24-bit ADC &rarr; Raspberry Pi 5 over SPI (lgpio library). I took a soldering course specifically to hand-build the amplifier circuits myself, and designed the full wiring diagram from scratch, again starting from an undocumented base.</p>
+
+      <div class="full-img">
+        <img src="assets/ascend/wiring-diagram.jpg" alt="Hand-drawn wiring diagram for the dual load cell to AD620 amplifier to ADS1256 ADC to Raspberry Pi 5 signal chain">
+      </div>
+      <p class="caption">The full signal chain, diagrammed from scratch: two strain gauges &rarr; AD620 amplifiers &rarr; ADS1256 ADC &rarr; Raspberry Pi 5, with GPIO pin mapping for the SPI connection.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; THE HARDEST BUG</div>
+        <p>The AD620's V- pin was actively outputting -5V, generated internally by a 7660 charge pump, and that pin must never be connected to ground. Before I isolated this, it was destabilizing every reading on the board. It's a genuinely subtle analog catch: the kind of thing that only surfaces from tracing a circuit pin-by-pin rather than assuming datasheet-typical wiring.</p>
+      </div>
+
+      <p>I also worked out the shielding approach for the load cell's cable: shield grounded at one end only, twisted with the signal return at the AD620 input, validated against a public overlanding project ("Tuck's Truck") using the same load cell and a similar amplifier setup.</p>
+
+      <div class="full-img">
+        <img src="assets/ascend/loadcell-breadboard.jpg" alt="The dual load cell amplifier and ADC circuit built on a breadboard, connected to a Raspberry Pi">
+      </div>
+      <p class="caption">The signal chain built out on a breadboard: both AD620 amplifier modules, the ADS1256 ADC, and the SPI connection back to the Pi.</p>
+
+      <p>Software built from scratch for this system:</p>
+      <ul>
+        <li>A live monitoring tool with delta and status indicators</li>
+        <li>An interactive calibration wizard that saves to JSON and generates usage code</li>
+        <li>A 10Hz CSV data logger</li>
+        <li>Supporting diagnostic and gain/offset optimization scripts</li>
+      </ul>
+      <p><strong>Where it stands:</strong> after gain tuning, the system reached acceptable stability: about 1.2% variation at a ~3M count baseline. A 500kg load cell can't be meaningfully validated with hand pressure alone (that's only 1&ndash;4% of full scale, right at the noise floor), so the next step is testing with 50+ kg known weights before running the full calibration workflow.</p>
+
+      <h2>Why it matters</h2>
+      <div class="quote-block">
+        <p>The two systems are complementary, not two separate projects. The actuator system is the actuation half: it can move the brake lines to any commanded position, precisely and safely. The load cell system is the sensing half: it's what lets a flight controller know whether those commanded movements are actually working, and catch the earliest signs of a wing collapse before it fully develops. Without the sensor system, the actuators are flying blind. Without the actuator system, the sensors have nothing to inform.</p>
+      </div>
+
+      <h2>Build progress</h2>
+      <p>The chassis coming together over the year, from a bare frame to a fully wired platform with the machine-vision mount and propeller cage installed.</p>
+      <div class="build-grid">
+        <div class="build-item">
+          <img src="assets/ascend/chassis-frame.jpg" alt="Bare ATV chassis frame with wheels mounted">
+          <div class="bi-cap">01 &middot; Bare chassis frame + wheels</div>
+        </div>
+        <div class="build-item">
+          <img src="assets/ascend/chassis-mv-mount.jpg" alt="Chassis with machine vision camera mount installed">
+          <div class="bi-cap">02 &middot; Machine vision mount installed</div>
+        </div>
+        <div class="build-item">
+          <img src="assets/ascend/chassis-propcage.jpg" alt="Chassis with propeller cage and full wiring">
+          <div class="bi-cap">03 &middot; Propeller cage + full wiring</div>
+        </div>
+      </div>
+
+      <div class="img-row">
+        <img src="assets/ascend/welding-fabrication.jpg" alt="Welding the propeller cage frame">
+        <img src="assets/ascend/telemetry-laptop.jpg" alt="Ground control software showing live telemetry next to the machine vision mount">
+      </div>
+      <p class="caption">Left: welding the propeller cage frame. Right: ground-control telemetry, showing GPS position, heading, and speed, running live next to the machine vision mount.</p>
+
+      <h2>Field testing</h2>
+      <p>Ground tests to validate the chassis and drivetrain, plus a wing-inflation test to check the parafoil deploys and holds shape correctly before attempting a tethered or free flight.</p>
+      <div class="img-row">
+        <img src="assets/ascend/ground-test-walk.jpg" alt="Ground test, walking the ATV chassis along a path">
+        <img src="assets/ascend/ground-test-field.jpg" alt="ATV chassis on its own in a grass field during a ground test">
+      </div>
+      <p class="caption">Ground tests on UT Austin campus, checking drivetrain response and stability before adding the wing.</p>
+      <div class="full-img">
+        <img src="assets/ascend/wing-inflation-test.jpg" alt="Parafoil wing laid out on the grass in front of the ATV chassis during an inflation test">
+      </div>
+      <p class="caption">Wing-inflation test: the parafoil laid out and inflated ahead of the chassis, checking it holds shape correctly.</p>
+
+      <h2>Roadmap</h2>
+      <p>GoAERO's Stage 3 requires a demonstrated flying prototype by November/December, constrained by FAA authorization. The team's timeline is built backward from the Final Fly-Off at NASA Ames in February 2027:</p>
+      <div class="video-links">
+        <div class="video-link" style="cursor:default;">
+          <div><div class="vt">Final Fly-Off Registration Opens</div><div class="vd">Stage 3 begins</div></div>
+          <div class="ts">Dec 2025</div>
+        </div>
+        <div class="video-link" style="cursor:default;">
+          <div><div class="vt">Final Fly-Off Qualifying Opens</div><div class="vd">Concept validation window begins</div></div>
+          <div class="ts">Jun 2026</div>
+        </div>
+        <div class="video-link" style="cursor:default;">
+          <div><div class="vt">Final Fly-Off Registration Deadline</div><div class="vd">Team must be confirmed for the fly-off</div></div>
+          <div class="ts">Nov 2026</div>
+        </div>
+        <div class="video-link" style="cursor:default;">
+          <div><div class="vt">Final Fly-Off Qualifying Deadline</div><div class="vd">Flying prototype must be demonstrated, FAA-authorized</div></div>
+          <div class="ts">Dec 2026</div>
+        </div>
+        <div class="video-link" style="cursor:default;">
+          <div><div class="vt">Final Fly-Off</div><div class="vd">NASA Ames, Silicon Valley</div></div>
+          <div class="ts">Feb 2027</div>
+        </div>
+      </div>
+      <p>Immediate next steps (Summer 2026): continued machine-vision data collection, finishing linear actuator implementation, a new battery installation, structural work on the frame, remote control of braking and steering, and more field tests. Beyond the competition itself, the team is also exploring applications for the platform outside of emergency response.</p>
+
+      <h2>Team & recognition</h2>
+      <div class="full-img">
+        <img src="assets/ascend/team-photo.jpg" alt="ASCEND team group photo with the parafoil wing laid out and the A-150 chassis in front">
+      </div>
+      <p class="caption">The ASCEND team, with the A-150 chassis and parafoil wing laid out for a field test.</p>
+      <p><strong>Faculty Advisor:</strong> Christian Claudel</p>
+            <p class="caption">More photos of the actual hardware (actuators, load cell rig, wiring) coming soon.</p>
+    </div>
+  </section>
+
+
+  <!-- ============ ROBOTATHON PROJECT VIEW ============ -->
+  <section class="view" id="view-fri1">
+<div class="proj-hero" style="background:#EEF2F8;">
+      <svg viewBox="0 0 1400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="500" fill="#EEF2F8"/>
+        <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
+          <path d="M0 100 H1400 M0 200 H1400 M0 300 H1400 M0 400 H1400"/>
+          <path d="M200 0 V500 M500 0 V500 M800 0 V500 M1100 0 V500"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="15" fill="#4B5567">
+          <rect x="60" y="220" width="230" height="60" rx="6" fill="#FFFFFF" stroke="#3D6BFF" stroke-width="1.5"/>
+          <text x="175" y="246" text-anchor="middle" fill="#111826" font-size="13">"Serve the bowl thing</text>
+          <text x="175" y="264" text-anchor="middle" fill="#111826" font-size="13">in the middle"</text>
+
+          <path d="M300 250 H420" stroke="#3D6BFF" stroke-width="2" fill="none" marker-end="url(#arrow1)"/>
+
+          <rect x="430" y="215" width="150" height="70" rx="6" fill="#111826"/>
+          <text x="505" y="245" text-anchor="middle" fill="#3D6BFF" font-size="14" font-weight="bold">LLM</text>
+          <text x="505" y="264" text-anchor="middle" fill="#8993A6" font-size="10">Gemini 2.0 Flash</text>
+
+          <path d="M590 250 H710" stroke="#3D6BFF" stroke-width="2" fill="none" marker-end="url(#arrow1)"/>
+
+          <rect x="720" y="220" width="230" height="60" rx="6" fill="#FFFFFF" stroke="#3D6BFF" stroke-width="1.5"/>
+          <text x="835" y="246" text-anchor="middle" fill="#111826" font-size="13">"Pick the black bowl</text>
+          <text x="835" y="264" text-anchor="middle" fill="#111826" font-size="13">and place it in the basket"</text>
+
+          <path d="M960 250 H1080" stroke="#3D6BFF" stroke-width="2" fill="none" marker-end="url(#arrow1)"/>
+
+          <rect x="1090" y="215" width="150" height="70" rx="6" fill="#3D6BFF"/>
+          <text x="1165" y="245" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="bold">&#960;0 Policy</text>
+          <text x="1165" y="264" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-size="10">LIBERO-Object</text>
+        </g>
+        <defs>
+          <marker id="arrow1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#3D6BFF"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="scrim"></div>
+      <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+        <div class="badge-row">
+          <span class="badge meta">Freshman Research Initiative</span>
+          <span class="badge meta">Spring 2025</span>
+        </div>
+        <h1 class="display">FRI 1 <span class="theme-tag">&mdash; Instruction Clarity</span></h1>
+        <p class="subtitle">A semester studying why robot policies misunderstand human language, and building a layer that fixes it before the robot ever sees the instruction.</p>
+      </div>
+    </div>
+
+    
+    <div class="proj-body">
+<h2>The program</h2>
+      <p>The <strong>Freshman Research Initiative (FRI)</strong> gives first-year students at UT Austin the chance to do real research inside a faculty lab instead of waiting until upper-level years. It's competitive. I applied and was accepted into the <strong>Robot Learning stream</strong>, which runs inside the <strong>RobIn Lab</strong> (Robot Interactive Intelligence Lab), directed by Professor Roberto Mart&iacute;n-Mart&iacute;n. I used the lab's space and equipment and worked within its research direction, though day-to-day I worked under the stream's instructors rather than directly with Professor Mart&iacute;n-Mart&iacute;n himself.</p>
+      <p>The stream changed hands between my two semesters: <strong>Spring 2025</strong> was taught by <strong>Dr. Ben Abbatematteo</strong>, and <strong>Fall 2025</strong> was taken over by <strong>Professor Junhong Xu</strong>.</p>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">2</div><div class="label">SEMESTERS, TWO DIFFERENT PROJECTS</div></div>
+        <div class="stat"><div class="num">2</div><div class="label">CO-AUTHORED RESEARCH PAPERS</div></div>
+        <div class="stat"><div class="num">&rarr;</div><div class="label">LED TO A DIRECT FACULTY INVITE</div></div>
+      </div>
+
+      <h2>Spring 2025 &mdash; Does instruction clarity affect a robot policy?</h2>
+      <p>Robot policies are increasingly controlled through natural language: you type or say what you want, and the robot does it. The problem is that human language is often vague in ways people don't notice: "grab that and put it over there" is completely clear in context to another human, and completely useless to a policy with no shared context. Together with teammates Daniel Milan and Cougar Seale, I set out to actually measure how much that vagueness hurts task performance, and whether it could be fixed automatically.</p>
+      <p>We evaluated Physical Intelligence's <strong>&pi;0 ("Pi-Zero")</strong>, a pretrained, general-purpose vision-language-action policy, on pick-and-place tasks from the <strong>LIBERO-Object</strong> benchmark. To be clear about scope: we didn't build &pi;0 itself, we used it as our test subject, and built the evaluation framework and correction layer around it.</p>
+
+      <div class="full-img">
+        <img src="assets/fri/fig1-final.jpg" alt="Figure 1 from the paper: diagram showing language instructions and current observation feeding into the policy to produce a result">
+      </div>
+      <p class="caption">Fig. 1 from the paper. It shows the basic input given to the policy: a language instruction plus the current observation, producing a result.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; MEASURING "UNCLEAR"</div>
+        <p>We defined two original metrics to make instruction clarity something we could actually test against, rather than eyeball:</p>
+        <p><strong>Ambiguity score (&sigma;)</strong>: how much of the information critical to the task is actually present in the instruction, explicitly or implicitly. "Pick the black bowl between the plate and the ramekin" scores 1.0. "Serve the bowl thing in the middle of the table" scores 0.33.</p>
+        <p><strong>Relevance score (&eta;)</strong>: how much of the instruction is actually necessary versus just noise. "Pick the black bowl on the cookies box and place it on the plate" scores 1.0. Add "which I bought at the grocery store yesterday" and it drops to 0.67.</p>
+      </div>
+
+      <p>We ran &pi;0 on four target items (alphabet soup, cream cheese, orange juice, ketchup) across instructions at varying &sigma; and &eta; values, and measured task success rate at each level.</p>
+
+      <div class="img-row">
+        <img src="assets/fri/chart_ambiguity.png" alt="Line chart of task success rate versus instruction ambiguity score">
+        <img src="assets/fri/chart_relevance.png" alt="Line chart of task success rate versus instruction relevance score">
+      </div>
+      <p class="caption">Both metrics show the same pattern: performance is roughly flat near the top, then drops sharply below a threshold: around &sigma; = 0.5 for ambiguity, and a more lenient &eta; = 0.25 for relevance.</p>
+
+      <p>The likely explanation: &pi;0 mostly matches the <em>exact name</em> of the target item rather than reasoning about its form or function. That's why instructions using synonyms (lower &sigma;) hurt performance more than instructions with extra irrelevant clauses (lower &eta;), since the target item stayed named either way. Worth noting honestly: even at perfect clarity, the best success rate we measured was under 40%. That points to &pi;0 having its own limitations on custom instructions, possibly from overfitting to where target objects typically sit in LIBERO's training scenarios, separate from the clarity question itself.</p>
+
+      <h2>Fixing it: an LLM in the loop</h2>
+      <p>Since LIBERO-Object's tasks all reduce to one template, "Pick the [item] and place it in the basket," we tested whether an LLM could sit between the user and the policy, rewriting messy instructions into that clean form before &pi;0 ever saw them. We used <strong>Google's Gemini 2.0 Flash</strong> via its API, giving it the raw instruction plus the list of possible target items.</p>
+
+      <div class="full-img">
+        <img src="assets/fri/fig2-final.jpg" alt="Figure 2 from the paper: diagram showing the intermediate LLM layer revising a language instruction before it reaches the policy">
+      </div>
+      <p class="caption">Fig. 2 from the paper. The corrected pipeline: the LLM intercepts the raw instruction, cross-references it against the current observation, and hands the policy a clean, unambiguous instruction instead.</p>
+      <p>It worked essentially perfectly: Gemini correctly identified the intended item in every single trial, across every ambiguity and relevance level we tested. The only exception was the fully-degenerate case (&sigma; = &eta; = 0), where no real information was present at all, and it correctly output "none of the above."</p>
+
+      <div style="max-width:280px; margin:20px auto;">
+        <img style="border-radius:6px; border:1px solid var(--line); width:100%; display:block;" src="assets/fri/fri-libero-sim.jpg" alt="LIBERO-Object simulation environment: a robot arm above a table with bowls, a plate, and a cabinet">
+      </div>
+      <p class="caption">The LIBERO-Object simulation environment: the robot arm, table, and objects used across every test case.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; DIFFICULTIES ALONG THE WAY</div>
+        <p><strong>Instruction leakage.</strong> &pi;0 would sometimes ignore our custom instructions and act on an old one instead, or refuse to follow the new one at all. We never fully confirmed the cause. It was possibly overfitting to the LIBERO test environments, possibly some internal state we couldn't see.</p>
+        <p><strong>Shared infrastructure.</strong> &pi;0 ran on a lab server shared with other FRI groups also using it. When they were running their own tests, we simply couldn't run ours. Scheduling around that was its own logistical constraint on the project.</p>
+      </div>
+
+      <p>This was an even three-way split across the team, and my focus was on the experimental side: running the actual test trials in the LIBERO-Object simulation, logging success rates for each instruction condition, and reviewing the recorded trial video for every run to judge, case by case, whether the policy had actually completed the task. That trial-by-trial scoring is what the results in Tables I and II further down are built from. The code (the LLM disambiguation script and the task-file modification tooling) is also included below since I wrote it as part of the project, but the paper's data collection itself was hands-on, one trial at a time. All model code is directly from, or lightly modified from, Physical Intelligence's public <a href="https://github.com/Physical-Intelligence/openpi" target="_blank">openpi</a> repository.</p>
+
+      <p><strong>Team:</strong> Daniel Milan, Cougar Seale, and Rafael Torres, under Dr. Ben Abbatematteo.</p>
+
+      <div class="video-links">
+        <a class="video-link" href="assets/fri/FRI-Spring2025-Instruction-Clarity-Paper.pdf" download="Assessing-Unclear-Instructions-Torres-Milan-Seale.pdf">
+          <div><div class="vt">Read the full paper</div><div class="vd">"Assessing the Effect of Unclear Task Instructions on a Generalist Language-Conditioned Policy"</div></div>
+          <div class="ts">PDF &darr;</div>
+        </a>
+      </div>
+
+      
+    </div>
+  </section>
+
+
+  <!-- ============ FRI 2 VIEW ============ -->
+  <section class="view" id="view-fri2">
+    <div class="proj-hero" style="background:#EEF2F8;">
+      <svg viewBox="0 0 1400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="500" fill="#EEF2F8"/>
+        <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
+          <path d="M0 100 H1400 M0 200 H1400 M0 300 H1400 M0 400 H1400"/>
+          <path d="M200 0 V500 M500 0 V500 M800 0 V500 M1100 0 V500"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="13" fill="#4B5567">
+          <text x="150" y="150" fill="#111826" font-size="16" font-weight="bold">FRI &mdash; Fall 2025</text>
+          <text x="150" y="172" fill="#8993A6" font-size="11">Robot Learning Stream, under Professor Xu</text>
+          <text x="150" y="230" fill="#3D6BFF" font-size="12">Custom end-effector design</text>
+          <text x="150" y="254" fill="#3D6BFF" font-size="12">Robosuite / MuJoCo environment</text>
+          <text x="150" y="278" fill="#3D6BFF" font-size="12">BC-Min, BC-Rich, Diffusion policies</text>
+        </g>
+      </svg>
+      <div class="scrim"></div>
+      <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+        <div class="badge-row">
+          <span class="badge meta">Freshman Research Initiative</span>
+          <span class="badge meta">Fall 2025</span>
+        </div>
+        <h1 class="display">FRI 2 <span class="theme-tag">&mdash; SawyerRoll</span></h1>
+        <p class="subtitle">The second semester of the Robot Learning stream, under Professor Junhong Xu.</p>
+      </div>
+    </div>
+
+    <div class="proj-body">
+<h2>Fall 2025 &mdash; SawyerRoll</h2>
+      <p>For the second semester, under Professor Junhong Xu when he took over the Robot Learning stream, I worked with teammates Cougar Seale and Anikait Gupta on <strong>SawyerRoll</strong>: a system for getting a Sawyer robot arm to roll a ball to a target area. Rolling is a strange gap in robotics manipulation research. There's a lot of work on pick-and-place and on throwing, but rolling sits in between them mechanically (continuous contact like pushing, but direction- and release-sensitive like throwing), and it's comparatively unexplored. I took on the majority of the technical build across the project: the mechanical design, both simulation environments, the demonstration collection, and training and evaluating all three policies. That's reflected in the level of detail below.</p>
+
+      <h2>The mechanical design</h2>
+      <p>Sawyer's default gripper is a two-prong design, and controlling those prongs mid-roll (timing the release, tracking prong pressure) would have added a lot of complexity that had nothing to do with the actual research question. So instead of using it, I designed a custom, standardized end-effector. The idea: if every robot arm in a future benchmark used the same custom tool instead of its own default gripper, the benchmark itself would be arm-agnostic.</p>
+
+      <div class="img-row">
+        <img src="assets/sawyerroll/fig1-egg-spoon.jpg" alt="A spoon carrying an egg, used as a visual reference for the end-effector's intended function">
+        <img src="assets/sawyerroll/fig2-endeffector-cad.jpg" alt="CAD model of the final cup-shaped end-effector design">
+      </div>
+      <p class="caption">The design reference was literally a spoon carrying an egg: a shape that holds the ball securely but still lets it rotate and roll off cleanly. I modeled the final version in Onshape.</p>
+
+      <p>The first pass wasn't curved enough. The ball would roll off under any real speed or sudden direction change, both of which are central to the task. I increased the cup's curvature to fix that. Then a second, more technical problem showed up once I tried to bring the design into the simulator: MuJoCo's collision system only supports <strong>convex</strong> shapes, and my cup was concave. I had to decompose the design into convex pieces to make it physically simulable.</p>
+
+      <div class="full-img" style="max-width:320px; margin:20px auto;">
+        <img src="assets/sawyerroll/fig5-convex-decomp.jpg" alt="The end-effector design broken down into 16 convex parts for MuJoCo collision" style="border-radius:6px; border:1px solid var(--line);">
+      </div>
+      <p class="caption">The final end-effector, decomposed into 15 convex parts so MuJoCo could actually compute collisions against it.</p>
+
+      <h2>The simulation environment</h2>
+      <p>I built this in <strong>Robosuite</strong>, on top of the <strong>MuJoCo</strong> physics engine. The deciding factor was contact accuracy. Rolling depends entirely on friction and contact dynamics in a way that pick-and-place or throwing tasks don't need to model at all, so the physics engine mattered a lot more here than it usually does.</p>
+      <p>The first working environment placed a Sawyer arm and ball in Robosuite's default arena, ball held between the stock gripper's prongs. The second, more developed version dropped the default gripper entirely (my first successful attempt at modifying the Sawyer arm's own XML file) and moved to a clean arm-plus-table-plus-ball setup, which is what I built the custom end-effector integration on top of.</p>
+
+      <div class="full-img">
+        <img src="assets/sawyerroll/fig6-sim-env.jpg" alt="The final SawyerRoll simulation environment with the ball and target area marked">
+      </div>
+      <p class="caption">The final environment: Sawyer arm, ball, table, and a marked target area for the ball to roll into.</p>
+
+      <h2>Data collection</h2>
+      <p>I collected demonstrations by teleoperating the arm directly with the keyboard, using Robosuite's built-in teleoperation tooling. To keep the task focused purely on the rolling behavior itself (not also on grasping), the ball started pre-placed in the end-effector for every demo. Getting the physics parameters right took real trial and error. Every early demo just rolled the ball straight off the table:</p>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">0.75m</div><div class="label">TABLE HEIGHT</div></div>
+        <div class="stat"><div class="num">0.035m</div><div class="label">BALL RADIUS (TENNIS BALL)</div></div>
+        <div class="stat"><div class="num">3000 / 4</div><div class="label">BALL FRICTION / DENSITY</div></div>
+      </div>
+
+      <p>A trial counted as successful if the ball stayed inside the target area for at least 5 seconds, a threshold I picked specifically because MuJoCo's contact physics for a rolling ball are never perfectly stable, so requiring the ball to sit dead still wasn't realistic. I also wrote a reward function to score every trial:</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; REWARD FUNCTION</div>
+        <p style="font-family:'IBM Plex Mono'; font-size:13px;">r = &minus;1  &nbsp;&nbsp;if &#8214;e &minus; t&#8214; &lt; 0.3<br>r = 1/(1+d) &minus; (v/10)&middot;&#120126;(d &lt; r<sub>a</sub>)  &nbsp;&nbsp;otherwise</p>
+        <p>where d is the ball's distance to target, v is its velocity, e is the end-effector position, t is the target position, and r<sub>a</sub> is the target radius, balancing proximity to target against how fast the ball is still moving.</p>
+      </div>
+
+      <div class="img-row">
+        <img src="assets/sawyerroll/fig7-success.jpg" alt="Screenshot of a successful demonstration, ball resting inside the target area">
+        <img src="assets/sawyerroll/fig8-failure.jpg" alt="Screenshot of an unsuccessful demonstration, ball having rolled off the table">
+      </div>
+      <p class="caption">Left: a successful trial, ball settled inside the target. Right: a failed trial, where the ball never settled and rolled straight off the table.</p>
+
+      <p>I collected 25 successful demonstrations and stored them, via Robosuite's gather function, in an HDF5 file formatted for <strong>Robomimic</strong>: joint positions/velocities/angles, end-effector pose, ball position, timestamps, input actions, and reward, all per demo.</p>
+
+      <h2>Three policies, one question: does more state help?</h2>
+      <p>I trained and evaluated three distinct imitation-learning policies on the same 25 demonstrations, specifically to isolate the effect of how much state information a policy gets:</p>
+      <ul>
+        <li><strong>BC-Min</strong> (Behavioral Cloning): given only end-effector pose and ball position</li>
+        <li><strong>BC-Rich</strong> (Behavioral Cloning): given the above, plus full joint positions, velocities, and angles</li>
+        <li><strong>Diffusion</strong>: given the richest state set, including reward and timestamps</li>
+      </ul>
+      <p>The hypothesis: more state (specifically, knowing the arm's actual joint configuration rather than just its end-effector pose) should make a policy more robust to the small physical deviations MuJoCo's contact physics constantly introduces.</p>
+
+      <div class="img-row">
+        <img src="assets/sawyerroll/fig9-loss-bcmin.jpg" alt="BC-Min training loss versus epoch">
+        <img src="assets/sawyerroll/fig10-loss-bcrich.jpg" alt="BC-Rich training loss versus epoch">
+      </div>
+      <div class="full-img" style="max-width:500px; margin:16px auto 0;">
+        <img src="assets/sawyerroll/fig11-loss-diffusion.jpg" alt="Diffusion policy training loss versus epoch">
+      </div>
+      <p class="caption">Training loss curves for BC-Min, BC-Rich, and Diffusion. All three converge quickly, but the diffusion policy's loss drops furthest.</p>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">+29%</div><div class="label">BC-RICH VS BC-MIN, TOTAL REWARD</div></div>
+        <div class="stat"><div class="num">+50%</div><div class="label">BC-RICH VS BC-MIN, FINAL REWARD</div></div>
+        <div class="stat"><div class="num">30</div><div class="label">EVALUATION EPISODES PER POLICY</div></div>
+      </div>
+
+      <p>The hypothesis held: across 30 evaluation episodes each, <strong>BC-Rich beat BC-Min by about 29% on total reward and about 50% on final reward</strong>, a large enough gap (about 5&times; BC-Min's own standard deviation) to be a real effect, not noise. The likely mechanism is <strong>compounding error</strong>: a behavioral-cloning policy only knows how to react to states it's seen before, and BC-Min, working from end-effector pose alone, has no way to tell when a small physics deviation (say, gravity pulling the arm slightly differently than expected) has knocked it off the trajectory it memorized. BC-Rich, with full joint state, has enough information to stay closer to the demonstrated behavior even after small deviations.</p>
+      <p>Worth being direct about the honest result here: <strong>neither BC model ever achieved a perfect success</strong> (a final reward of 1) across all 30 episodes. Compounding error and the small, narrow demonstration set both limited how well either model generalized, even though BC-Rich was clearly the stronger of the two.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; WHAT WENT WRONG</div>
+        <p><strong>The diffusion policy's success metrics never got captured.</strong> Its loss curve looks the best of all three (dropping from 0.8 to about 0.16 within the first 5 epochs), but a script issue in how the diffusion policy's training pipeline called its own metrics meant I never got total/final reward numbers to directly compare it against the two BC models on equal footing.</p>
+        <p><strong>Diffusion also hit a hardware ceiling.</strong> Every policy was scheduled for 100 training epochs, but the diffusion model is memory-heavy enough that training was cut off at epoch 50 due to limited space, so even its loss curve should be read knowing it may not have finished converging.</p>
+        <p><strong>The offline RL data-collection wrapper never worked correctly.</strong> It had a bug in how it registered the next observation, which is required for offline RL training, so that direction of the project didn't make it into the final results.</p>
+      </div>
+
+      <p><strong>Biggest limitation overall:</strong> 25 demonstrations is a small dataset, and all 25 were fairly similar successful rolls, enough to see a real signal between BC-Min and BC-Rich, but not enough to fully separate "the model learned to roll a ball" from "the model memorized 25 near-identical trajectories." The proposed next step in the paper is two much larger demo sets (250 similar, 250 varied) to properly test that distinction.</p>
+
+      <p><strong>Team:</strong> Rafael Torres, Cougar Seale, and Anikait Gupta, under Professor Junhong Xu.</p>
+
+      <div class="video-links">
+        <a class="video-link" href="assets/sawyerroll/SawyerRoll-Paper.pdf" download="SawyerRoll-Torres-Seale-Gupta.pdf">
+          <div><div class="vt">Read the full paper</div><div class="vd">"SawyerRoll: A Mechanical and Learning System for Robotic Ball Rolling"</div></div>
+          <div class="ts">PDF &darr;</div>
+        </a>
+        <a class="video-link" href="https://github.com/Rafa-Torres-R/SawyerRoll" target="_blank">
+          <div><div class="vt">SawyerRoll on GitHub</div><div class="vd">Full code: environment, end-effector, training, evaluation</div></div>
+          <div class="ts">Repo &rarr;</div>
+        </a>
+      </div>
+
+
+      <h2>What came next</h2>
+      <p>This project is what led directly to my next research position. Professor Xu, who took over the Robot Learning stream this semester, reached out to me personally at the end of the term after seeing what I'd built here, specifically the experience of standing up a physics-simulation environment from scratch and getting comfortable inside Robosuite/MuJoCo for SawyerRoll. He had a project that needed exactly that skill set, applied to a different simulator (ManiSkill-HAB instead of Robosuite): building and editing custom environments and tasks for long-horizon robot manipulation.</p>
+      <p>That became a solo research project in Spring 2026 under the Learning Agents Research Group. Look at the Memory Research tab for more detail!</p>
+
+    </div>
+  </section>
+
+
+  <section class="view" id="view-memory">
+    <div class="proj-hero" style="background:#EEF2F8;">
+      <svg viewBox="0 0 1400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="500" fill="#EEF2F8"/>
+        <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
+          <path d="M0 100 H1400 M0 200 H1400 M0 300 H1400 M0 400 H1400"/>
+          <path d="M200 0 V500 M500 0 V500 M800 0 V500 M1100 0 V500"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="13" fill="#4B5567">
+          <rect x="80" y="150" width="220" height="200" rx="6" fill="#FFFFFF" stroke="#3D6BFF" stroke-width="1.5"/>
+          <text x="190" y="185" text-anchor="middle" fill="#111826" font-size="12" font-weight="bold">Persistent Env</text>
+          <text x="190" y="220" text-anchor="middle" fill="#8993A6" font-size="10">subtask_objs[0]</text>
+          <text x="190" y="240" text-anchor="middle" fill="#8993A6" font-size="10">= bowl-0</text>
+          <line x1="120" y1="260" x2="260" y2="260" stroke="#E3E7EE" stroke-width="1"/>
+          <text x="190" y="290" text-anchor="middle" fill="#3D6BFF" font-size="11" font-weight="bold">40s recreate</text>
+          <text x="190" y="308" text-anchor="middle" fill="#8993A6" font-size="9">(the old way)</text>
+
+          <path d="M320 250 H460" stroke="#3D6BFF" stroke-width="2" fill="none" marker-end="url(#arrowM)" stroke-dasharray="5 4"/>
+          <text x="390" y="235" text-anchor="middle" fill="#8993A6" font-size="10">inject</text>
+
+          <rect x="470" y="150" width="220" height="200" rx="6" fill="#111826"/>
+          <text x="580" y="185" text-anchor="middle" fill="#3D6BFF" font-size="12" font-weight="bold">Actor.create_from</text>
+          <text x="580" y="203" text-anchor="middle" fill="#3D6BFF" font-size="12" font-weight="bold">_entities()</text>
+          <text x="580" y="235" text-anchor="middle" fill="#FFFFFF" font-size="10">new wrapper</text>
+          <text x="580" y="253" text-anchor="middle" fill="#FFFFFF" font-size="10">around bowl-3</text>
+          <text x="580" y="290" text-anchor="middle" fill="#3D6BFF" font-size="11" font-weight="bold">&lt;1s injected</text>
+
+          <path d="M710 250 H850" stroke="#3D6BFF" stroke-width="2" fill="none" marker-end="url(#arrowM)"/>
+
+          <rect x="860" y="150" width="220" height="200" rx="6" fill="#3D6BFF"/>
+          <text x="970" y="185" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="bold">Policy Observes</text>
+          <text x="970" y="220" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Goal-conditioned</text>
+          <text x="970" y="238" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">depth image</text>
+          <text x="970" y="270" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">bowl-3 highlighted</text>
+
+          <path d="M1090 250 H1200" stroke="#3D6BFF" stroke-width="2" fill="none" marker-end="url(#arrowM)"/>
+          <text x="1250" y="255" text-anchor="middle" fill="#111826" font-size="12" font-weight="bold">Correct</text>
+          <text x="1250" y="273" text-anchor="middle" fill="#111826" font-size="12" font-weight="bold">action</text>
+        </g>
+        <defs>
+          <marker id="arrowM" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#3D6BFF"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="scrim"></div>
+      <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+        <div class="badge-row">
+          <span class="badge meta">Learning Agents Research Group</span>
+          <span class="badge meta">Solo Research</span>
+          <span class="badge meta">Spring 2026</span>
+        </div>
+        <h1 class="display">Memory Research <span class="theme-tag">&mdash; ManiSkill-HAB</span></h1>
+        <p class="subtitle">Getting a robot to take commands one at a time, mid-task, without losing 40 seconds or losing track of what it was already doing.</p>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <h2>How this started</h2>
+      <p>Professor Junhong Xu reached out directly at the end of Fall 2025, after seeing what I'd built in the second half of the FRI Robot Learning stream, specifically the experience of standing up a physics-simulation environment from scratch and getting comfortable inside Robosuite/MuJoCo for SawyerRoll. He had a project that needed exactly that skill set, applied to a different simulator: building and editing custom environments and tasks inside <strong>ManiSkill-HAB (MS-HAB)</strong>, a benchmark for long-horizon home-robot manipulation. I worked on this solo through Spring 2026.</p>
+      <p>This project wrapped without a published paper. Professor Xu's time with the lab ended around the close of the semester, and I moved on to a summer internship at General Motors before either of us could take it further. What's documented here is the engineering record instead: weekly progress notes, the working code, and video of the system actually running.</p>
+
+      <h2>The goal</h2>
+      <p>The project's actual deliverable was a <strong>demonstration dataset</strong>: trajectory data collected across 15 long-horizon manipulation tasks in MS-HAB's SetTable benchmark, meant to train better downstream robot policies. That's the piece the lab could keep using. Getting there required solving a problem that turned out to be much deeper than expected, and became its own thread of the project: MS-HAB treats long-horizon tasks (setting a table) as chains of smaller learned skills, pick, place, open, close, navigate, each with its own pretrained policy, but the framework only lets you hand it a full task plan up front. Making it interactive instead, so a person could give commands one at a time in natural language and have the environment stay live and remember what had already happened, is what led to the goal-injection work below.</p>
+
+      <div class="video-slot">
+        <div class="vs-icon">&#9654;</div>
+        <div class="vs-label">VIDEO SLOT</div>
+        <p>Early ManiSkill exploration: single robot, parallelized environments, and the ReplicaCAD realistic-scene example.</p>
+      </div>
+
+      <h2>Building the foundation</h2>
+      <p>MS-HAB runs on top of <strong>SAPIEN</strong> (the same relationship Robosuite has to MuJoCo, which made the transition easier coming off SawyerRoll). Early on, I worked through how MS-HAB structures tasks: subtask types (<code>PickSubtask</code>, <code>PlaceSubtask</code>, <code>NavigateSubtask</code>, <code>OpenSubtask</code>, <code>CloseSubtask</code>), how articulated objects like drawers and fridges are configured, and how a full task plan chains them together.</p>
+      <p>Building my first custom task (picking up a bowl, opening a drawer, placing the bowl inside) surfaced the first real lesson: the default sample code drove the robot with <code>env.action_space.sample()</code>, literally random actions. Nothing was actually being learned or decided; the robot just twitched randomly and happened to occasionally brush against something. The fix was switching to MS-HAB's <strong>pretrained policy checkpoints</strong>: a separate trained neural network for each individual skill (pick, place, open, close, navigate), each one already knowing what "correct" looks like for its specific job.</p>
+      <p>I also spent real time reverse-engineering MS-HAB's coordinate system by trial and error: moving individual objects, re-running, and watching what changed, until I could reliably map which axis controlled depth into the counter, height, and lateral position. That sounds small, but every custom scene I built after this depended on it.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; WHY SMALL LLMS CAN'T HANDLE EVERYTHING</div>
+        <p>For most commands, a small local LLM (Qwen 2.5, 7B parameters, running on an RTX 4090) works fine as a translator from natural language into a subtask sequence. But for a genuinely complex operation like <strong>swapping two objects' positions</strong>, which requires staging one object out of the way, moving the second into the first's old spot, then moving the first into the second's old spot. Small models consistently failed. They exhibit what's called "greedy planning": generating the most locally-obvious next step without simulating consequences several steps ahead, so they'd repeatedly try to place an object directly where another object still was, causing a collision.</p>
+        <p>The fix was a <strong>hybrid approach</strong>: let the LLM handle simple sequential commands (fast, flexible), and fall back to deterministic hard-coded logic for known complex operations like swaps (reliable, and faster than generating 12 tokens when you can just compute the sequence).</p>
+      </div>
+
+      <h2>The core problem: policies don't read commands, they read pixels</h2>
+      <p>The central obstacle of the whole project showed up once I tried to make the system truly interactive. The intuitive approach doesn't work: keep one environment running, and just update its internal goal every time a new command comes in. The reason isn't obvious until you dig into how these policies were trained: <strong>they're observation-driven, not instruction-driven.</strong> A policy never sees your parsed command dictionary like <code>{"type": "pick", "obj_id": "bowl-3"}</code>. It only ever sees numerical observations, and critically, the target object's identity is baked into those observations visually, as a highlighted region in a rendered depth image, not as an editable coordinate sitting in a state vector.</p>
+      <p>That meant the environment being initialized with "pick bowl-0" would keep showing the policy bowl-0 as the goal in every single observation, no matter what command a user typed next. The policy would just keep reaching for bowl-0. I tested and ruled out bypassing this with a lower-level "primitive step" function that skips the normal observation pipeline entirely; it does return raw camera frames, but with no goal highlighting at all, which just confuses a policy that's never seen an unhighlighted scene.</p>
+
+      <div class="video-slot">
+        <div class="vs-icon">&#9654;</div>
+        <div class="vs-label">VIDEO SLOT</div>
+        <p>Early custom-task attempts: the bowl/drawer test, the switch to the apple task, and the first successful run with policy checkpoints instead of random actions.</p>
+      </div>
+
+      <h2>The breakthrough: dynamic goal injection</h2>
+      <p>The only real options were: recreate the whole environment for every single command (correct, but a ~40-second physics-replay delay each time), or find a way to change the goal inside a live environment without recreating it. I found the second path. MS-HAB stores each subtask's target as an entry in an internal list (<code>subtask_objs[]</code>), and I discovered that directly mutating an existing entry doesn't work. The object wrapper's position is cached at creation and never updates. But <strong>replacing the entire wrapper</strong> with a freshly constructed one (via <code>Actor.create_from_entities()</code>, pointed at the new target) does work, and the environment picks it up immediately.</p>
+
+      <div class="video-slot">
+        <div class="vs-icon">&#9654;</div>
+        <div class="vs-label">VIDEO SLOT</div>
+        <p>Dynamic goal injection demo: switching the robot's target from bowl-0 to bowl-3 live, with no environment recreation.</p>
+      </div>
+
+      <p>The result: per-command overhead dropped from about <strong>40 seconds down to under 1 second</strong>, with identical policy behavior. That single technique is what actually made an interactive, on-the-fly command loop feasible at all.</p>
+
+      <h2>Debugging deeper: two lists, not one</h2>
+      <p>Getting simple pick commands working with this technique was one thing; getting the full pipeline (including opening drawers and fridges) working was another. A costly early mistake: I was updating <code>subtask_objs[]</code>, assuming it controlled everything about the goal, including the green "target" indicator MS-HAB renders in its visualization. It doesn't. There's a <em>separate</em> list, <code>subtask_goals[]</code>, that the rendering and observation pipeline actually reads for exactly this purpose. Conflating the two cost real debugging time before the distinction became clear.</p>
+      <p>Even after fixing that, the open-drawer subtask remained stubborn: the robot would navigate to the correct drawer, the goal indicator would appear on the correct handle, and the policy would still output near-zero force, effectively doing nothing. The eventual explanation: opening a drawer depends on several pieces of internal state staying mutually consistent (the goal position, the articulation reference, the subtask pointer, and a cached table of handle world-positions computed once at environment start). My injection was setting most of these correctly, but leaving that cached handle-position table stale, which fed the policy a set of observations that quietly contradicted each other in a way it had never seen during training, and it responded by doing nothing at all rather than something wrong.</p>
+
+      <div class="video-slot">
+        <div class="vs-icon">&#9654;</div>
+        <div class="vs-label">VIDEO SLOT</div>
+        <p>The green goal-indicator appearing correctly on a drawer handle, and separately, footage from before the fix where it doesn't appear at all.</p>
+      </div>
+
+      <p>The architecture that came out of this, and the part I'd confidently defend to anyone asking whether the overall approach was sound, is a clean two-loop structure: an <strong>outer loop</strong> that walks through the LLM-parsed sequence of primitive subtasks and injects the correct goal state for each one, and an <strong>inner loop</strong> that repeatedly queries the matching pretrained policy and steps physics until that specific subtask's success condition fires. It's a clean separation of "what should the robot be trying to do right now" from "given what it currently sees, what should it actually do." It's the same two-loop shape you'd sketch on a whiteboard for this class of problem. The remaining issues were state-consistency bugs within that architecture, not flaws in the architecture itself.</p>
+
+      <h2>A finding about policy generalization</h2>
+      <p>One more result worth calling out on its own, since it's a real finding and not just a bug: the "place" policy reliably succeeds at the dining-table location it was trained on, but fails in scenes that don't have that table at all. In the deployment scene used for the demonstration dataset, the only valid placement target is a fixed drawer location, and the policy's performance drop there is direct evidence of how narrowly it generalizes. It learned a mapping tied to a specific region of 3D space during training, not a general "put it down here" capability, so a goal position outside that region is effectively unfamiliar territory even though the task looks the same to a person watching.</p>
+
+      <h2>Building the demonstration pipeline</h2>
+      <p>MS-HAB ships with a built-in trajectory-saving option (<code>save_trajectory=True</code> in <code>mshab.evaluate</code>), which would have made this easy if it worked. It didn't: it fails on <code>SequentialTaskEnv</code> with a missing <code>num_saved_trajectories</code> attribute, a bug in the framework itself rather than anything in my setup. With no working built-in tool, I built a custom collection pipeline from the ground up.</p>
+      <p>I designed <strong>15 distinct long-horizon task variants</strong> for the SetTable benchmark, from a single object into a single drawer up through multi-object sequences and dual-container tasks involving both the fridge and the drawer, chosen to stress different parts of the system (navigation, multi-object state tracking, container proximity) instead of repeating the same easy case fifteen times. The pipeline itself runs in three stages: individual Python scripts generate the JSON task plan for each scenario and write it into MS-HAB's rearrange directory; a central collection script drives the simulation and dispatches to the correct one of 11 pretrained policy checkpoints (SAC for pick/place, PPO for navigate/open/close) at every step; completed episodes are saved as HDF5 alongside a matching rendered video.</p>
+      <p>Per episode, the HDF5 file holds depth images, full joint positions and velocities, end-effector pose, base velocity, grasp state, the pose of every object and articulation in the scene including drawer/fridge joint angles, actions, rewards, and both overall and per-subtask success flags, organized into one timestamped folder per run.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; ENGINEERING DETAILS THAT MATTERED</div>
+        <p>Getting the observation structure right after a goal injection took its own debugging: calling the environment's observation getter directly right after replacing a wrapper returns malformed keys. A single zero-action step in between is what actually refreshes the observation into a correctly structured one.</p>
+        <p>Memory-heavy tasks had to run with a single parallel environment to avoid running out of GPU memory, while lighter tasks scaled up to nine in parallel; overnight collection runs went unattended through <code>tmux</code>. I also found and fixed a policy-dispatch bug where the system was reading a placeholder pointer instead of the actual subtask type to decide which policy to run, which silently could have driven the wrong skill for a given step.</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">15</div><div class="label">TASK VARIANTS DESIGNED</div></div>
+        <div class="stat"><div class="num">11 / 15</div><div class="label">COMPLETED AT PROJECT'S END</div></div>
+        <div class="stat"><div class="num">11</div><div class="label">POLICY CHECKPOINTS ORCHESTRATED</div></div>
+      </div>
+
+      <div class="video-slot">
+        <div class="vs-icon">&#9654;</div>
+        <div class="vs-label">VIDEO SLOT</div>
+        <p>Full interactive session running the two-loop architecture, sequential natural-language commands executed live, and/or a data-collection run across the 15 task variants.</p>
+      </div>
+
+      <h2>Tech stack</h2>
+      <div class="tags" style="margin:16px 0;">
+        <span class="tag">ManiSkill-HAB</span><span class="tag">SAPIEN</span><span class="tag">SAC / PPO</span>
+        <span class="tag">HDF5</span><span class="tag">Qwen2.5-7B-Instruct</span><span class="tag">Python</span>
+        <span class="tag">Linux</span><span class="tag">tmux</span><span class="tag">Conda</span>
+      </div>
+
+
+      <div class="video-links">
+        <a class="video-link" href="https://github.com/Rafa-Torres-R/long-term-memory" target="_blank">
+          <div><div class="vt">long-term-memory on GitHub</div><div class="vd">Environment setup, goal injection, LLM parser, data collection pipeline</div></div>
+          <div class="ts">Repo &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-connect4">
+    <div class="proj-hero" style="background:#EEF2F8;">
+      <svg viewBox="0 0 1400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="500" fill="#EEF2F8"/>
+        <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
+          <path d="M0 100 H1400 M0 200 H1400 M0 300 H1400 M0 400 H1400"/>
+          <path d="M200 0 V500 M500 0 V500 M800 0 V500 M1100 0 V500"/>
+        </g>
+        <g>
+          <rect x="500" y="90" width="400" height="320" rx="10" fill="#111826"/>
+          <rect x="520" y="110" width="360" height="280" rx="4" fill="#1a2233"/>
+          <g fill="#EEF2F8">
+            <circle cx="560" cy="150" r="16"/><circle cx="605" cy="150" r="16"/><circle cx="650" cy="150" r="16"/>
+            <circle cx="695" cy="150" r="16"/><circle cx="740" cy="150" r="16"/><circle cx="785" cy="150" r="16"/><circle cx="830" cy="150" r="16"/>
+            <circle cx="560" cy="195" r="16"/><circle cx="605" cy="195" r="16"/><circle cx="650" cy="195" r="16"/>
+            <circle cx="695" cy="195" r="16"/><circle cx="740" cy="195" r="16"/><circle cx="785" cy="195" r="16"/><circle cx="830" cy="195" r="16"/>
+            <circle cx="560" cy="240" r="16"/><circle cx="605" cy="240" r="16"/><circle cx="650" cy="240" r="16"/>
+            <circle cx="695" cy="240" r="16"/><circle cx="740" cy="240" r="16"/><circle cx="785" cy="240" r="16"/><circle cx="830" cy="240" r="16"/>
+            <circle cx="560" cy="285" r="16"/><circle cx="605" cy="285" r="16"/><circle cx="650" cy="285" r="16"/>
+            <circle cx="695" cy="285" r="16"/><circle cx="740" cy="285" r="16"/><circle cx="785" cy="285" r="16"/><circle cx="830" cy="285" r="16"/>
+            <circle cx="560" cy="330" r="16"/><circle cx="605" cy="330" r="16"/><circle cx="650" cy="330" r="16"/>
+            <circle cx="695" cy="330" r="16"/><circle cx="740" cy="330" r="16"/><circle cx="785" cy="330" r="16"/><circle cx="830" cy="330" r="16"/>
+            <circle cx="560" cy="370" r="16"/><circle cx="605" cy="370" r="16"/><circle cx="650" cy="370" r="16"/>
+            <circle cx="695" cy="370" r="16"/><circle cx="740" cy="370" r="16"/><circle cx="785" cy="370" r="16"/><circle cx="830" cy="370" r="16"/>
+          </g>
+          <g fill="#3D6BFF">
+            <circle cx="650" cy="370" r="14"/><circle cx="695" cy="370" r="14"/><circle cx="650" cy="330" r="14"/>
+          </g>
+          <g fill="#E2985C">
+            <circle cx="605" cy="370" r="14"/><circle cx="605" cy="330" r="14"/><circle cx="560" cy="370" r="14"/>
+          </g>
+          <rect x="620" y="112" width="20" height="8" rx="3" fill="#3D6BFF"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="13" fill="#4B5567">
+          <text x="150" y="150" fill="#111826" font-size="16" font-weight="bold">ECE 319K</text>
+          <text x="150" y="172" fill="#8993A6" font-size="11">Embedded Systems Design</text>
+          <text x="150" y="220" fill="#3D6BFF" font-size="12">Slide-pot &rarr; cursor</text>
+          <text x="150" y="244" fill="#3D6BFF" font-size="12">2 buttons, 2 ISRs</text>
+          <text x="150" y="268" fill="#3D6BFF" font-size="12">DAC sound, bilingual UI</text>
+        </g>
+      </svg>
+      <div class="scrim"></div>
+      <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+        <div class="badge-row">
+          <span class="badge award">&#9733; Full Marks on Checkout</span>
+          <span class="badge meta">ECE 319K</span>
+          <span class="badge meta">Jan &ndash; May 2025</span>
+        </div>
+        <h1 class="display">Connect 4 <span class="theme-tag">&mdash; Embedded Systems</span></h1>
+        <p class="subtitle">A full hardware/software system built from scratch on a TI microcontroller: graphics, sampled sound, interrupts, and a bilingual UI, working together in real time.</p>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <h2>The course</h2>
+      <p><strong>ECE 319K, Introduction to Embedded Systems</strong>, is UT Austin's foundational embedded systems course, built around Jonathan Valvano's curriculum and the TI MSPM0G3507 LaunchPad. Each lab through the semester adds a layer, GPIO, ADC, DAC, interrupts, timers, LCD graphics, sampled sound, until the final lab asks you to combine all of it into one working system you design yourself.</p>
+
+      <h2>The assignment: Lab 9</h2>
+      <p>Lab 9 is that capstone, done in pairs. You propose your own project (or default to a Space Invaders clone), and a TA has to approve the proposal before you can start. Whatever you build, every project has to meet the same base requirements:</p>
+      <div class="component-legend">
+        <div class="cl-item"><div class="cl-name">2+ EXTERNAL BUTTONS</div><p>Must actually affect gameplay, not just exist.</p></div>
+        <div class="cl-item"><div class="cl-name">SLIDE-POT VIA ADC</div><p>Sampled at a rate satisfying the Nyquist theorem, playing a real role in the game.</p></div>
+        <div class="cl-item"><div class="cl-name">3+ ANIMATED SPRITES</div><p>Moving on the LCD in response to user input or time.</p></div>
+        <div class="cl-item"><div class="cl-name">2+ DAC SOUNDS</div><p>Generated via the DAC, sampled or synthesized.</p></div>
+        <div class="cl-item"><div class="cl-name">2+ INTERRUPT ISRS</div><p>Used appropriately, not just for show.</p></div>
+        <div class="cl-item"><div class="cl-name">BILINGUAL UI</div><p>Every displayed string in at least two languages, tied to an ABET criterion about designing with global/cultural awareness.</p></div>
+      </div>
+      <p>Development is deliberately modular: five separate test programs (<code>main1</code> through <code>main5</code>), each isolating one subsystem, language strings, sprites, switches/LEDs, sound, then full integration, before anything gets combined. Grading is a live checkout with a TA (code walkthrough plus a working demo), worth 6% of the course grade on its own.</p>
+
+      <h2>Our project: Connect Four</h2>
+      <p>Working with Jason Kuchler, we built a full two-player Connect Four game on the 7&times;6 grid. A slide-pot moves a cursor left and right across the top of the board to select a column; one button drops a disc into the selected column, a second pauses or resumes the game. Discs fall to the lowest open slot, and the game watches for four in a row, vertically, horizontally, or diagonally, ending in a win or a draw if the board fills first.</p>
+
+      <div class="component-legend">
+        <div class="cl-item"><div class="cl-name">SLIDE-POT &rarr; CURSOR</div><p>Sampled at 30 Hz via a periodic SysTick interrupt, satisfying Nyquist for smooth motion. The ADC reading converts directly into a column index across the 7 columns.</p></div>
+        <div class="cl-item"><div class="cl-name">BUTTON 1: DROP DISC</div><p>Software-debounced polling in the main loop, checked against the previous switch state, updates the board and triggers the drop.</p></div>
+        <div class="cl-item"><div class="cl-name">BUTTON 2: LANGUAGE TOGGLE</div><p>Switches between English and Spanish on the pre-game language-select screen.</p></div>
+        <div class="cl-item"><div class="cl-name">THREE SPRITES</div><p>The cursor, red discs, and yellow discs, discs animate downward when dropped, cursor tracks the slide-pot in real time.</p></div>
+        <div class="cl-item"><div class="cl-name">TWO SOUNDS</div><p>A drop sound and a win sound, sampled audio from .wav files played through the DAC on a fixed 11,025 Hz interrupt.</p></div>
+        <div class="cl-item"><div class="cl-name">ENGLISH + SPANISH</div><p>Full bilingual support, chosen at startup, covering every menu and game-over message.</p></div>
+      </div>
+
+      <p>Most of the base requirements map cleanly onto something the game actually needed, the slide-pot's Nyquist-rate sampling makes the cursor movement smooth rather than just technically compliant, and the two interrupt ISRs are both doing real, distinct jobs: <code>TIMG12_IRQHandler</code> at 30 Hz samples the slide-pot and updates the cursor column, and a genuine <code>SysTick_Handler</code> streams sampled audio to the DAC for the drop and win sounds. Disc drops themselves ended up handled by software-debounced polling in the main loop rather than a button-edge interrupt as originally proposed, a small deviation from the plan, but the finished system still satisfies the requirement with two real, independent interrupts doing meaningful work.</p>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">7&times;6</div><div class="label">GRID, STANDARD CONNECT FOUR</div></div>
+        <div class="stat"><div class="num">30 Hz</div><div class="label">SLIDE-POT SAMPLING RATE</div></div>
+        <div class="stat"><div class="num">2</div><div class="label">LANGUAGES SUPPORTED</div></div>
+      </div>
+
+      <div class="video-slot">
+        <div class="vs-icon">&#9654;</div>
+        <div class="vs-label">VIDEO SLOT</div>
+        <p>Full 4-minute system walkthrough: gameplay, cursor control, disc drops, sound, and the win/draw conditions in action.</p>
+      </div>
+
+      <h2>How the win detection actually works</h2>
+      <p>Every disc drop calls <code>CheckWinTie()</code> with the just-placed piece's row and column. Rather than scanning the whole board, it only checks the four lines that could possibly have just become a win, run through the dropped disc: the full row, the full column, and both diagonals through that cell, each as a running count that resets whenever it hits an empty or opposing-color slot. If none of the four connect, it separately checks whether the top row is completely full to call a tie. It's a small function, but it's doing the actual game logic that makes this a real Connect Four implementation rather than just a board renderer.</p>
+
+      <div class="full-img">
+        <img src="assets/connect4/connect4-hardware-v2.jpg" alt="The Connect Four hardware setup: LaunchPad, breadboard, ST7735R LCD showing the language-select screen, and speaker">
+      </div>
+      <p class="caption">The full setup: MSPM0G3507 LaunchPad, breadboard, ST7735R LCD (showing the language-select screen), and speaker.</p>
+
+      <div class="video-links">
+        <a class="video-link" href="https://github.com/Rafa-Torres-R/319K-Connect-Four" target="_blank">
+          <div><div class="vt">Connect Four on GitHub</div><div class="vd">Full source: game logic, win detection, sound, and drivers</div></div>
+          <div class="ts">Repo &rarr;</div>
+        </a>
+      </div>
+
+      <p><strong>Team:</strong> Jason Kuchler and Rafael Torres.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-robotathon">
+    <div class="proj-hero">
+      <img src="assets/robotathon/robotathon-hero.jpg" alt="Rafael assembling the Robotathon robot at the workbench">
+      <div class="scrim"></div>
+      <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+        <div class="badge-row">
+          <span class="badge award">★ Best Mechanical Design</span>
+          <span class="badge meta">Team Gordon Ratzky</span>
+          <span class="badge meta">Fall 2024</span>
+        </div>
+        <h1 class="display">Robotathon 2024 <span class="theme-tag">— RasterChef</span></h1>
+        <p class="subtitle">A ping-pong-ball collection robot, and a rubber-band roller mechanism nobody else on the field had thought to try.</p>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <h2>The challenge</h2>
+      <p>Robotathon is IEEE Robotics and Automation Society's annual UT Austin competition. Teams are handed a robotics starter kit (ESP32, motors, a color sensor, a line-sensor array, distance sensors) and about two months to design and build a fully custom robot from scratch.</p>
+      <p>The 2024 game centered on <strong>collecting and transporting ping-pong balls.</strong> Robots earned a ball by completing a <strong>color-matching challenge</strong> autonomously, then had to physically <strong>pick the ball up themselves</strong> (no hand-placing allowed) before navigating a line-following path and a <strong>"coop" bridge</strong> to a raised drop-off zone.</p>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">6</div><div class="label">TEAM MEMBERS</div></div>
+        <div class="stat"><div class="num">~2 MO.</div><div class="label">DESIGN → COMPETITION</div></div>
+        <div class="stat"><div class="num">1st</div><div class="label">SEMESTER AT UT</div></div>
+      </div>
+
+      <div class="theme-card">
+        <img src="assets/robotathon/rasterchef-logo.jpg" alt="RasterChef 2024 competition logo">
+        <div>
+          <div class="t-label">WHY "GORDON RATZKY"</div>
+          <p>Robotathon 2024's theme was <strong>RasterChef</strong>, a cooking competition motif. We leaned all the way in: our team name was a play on Gordon Ramsay, and we 3D-printed a small mouse to sit on the chassis as our mascot, Remy from Ratatouille. Hence "Ratzky."</p>
+        </div>
+      </div>
+
+      <p>My role was a mix of <strong>mechanical and electrical</strong>: chassis cutting and assembly, wiring, and mechanism design, while teammates led the code. This page focuses on the part I owned most directly: the intake mechanism that ended up defining the whole robot's identity.</p>
+
+      <h2>The mechanism</h2>
+      <p>Most teams solved ball pickup the same way: a bulldozer-style plow that scoops the ball against a wall, lifts, and tilts to let gravity roll it into a hopper. It works, but it's mechanically simple and it's what everyone converges on under time pressure.</p>
+      <p>We built something different: a <strong>rotating roller intake</strong>, directly inspired by a tennis ball hopper.</p>
+
+      <div class="mech-diagram" id="mechDiagram">
+      <div class="mech-panel">
+        <div class="mech-photo">
+          <span class="mp-label">Angled view</span>
+          <img src="assets/robotathon/robotathon-mechanism.jpg" alt="Roller intake mechanism, angled view, held in hand">
+        </div>
+        <div class="mech-photo">
+          <span class="mp-label">Front view</span>
+          <img src="assets/robotathon/mechanism-front.jpg" alt="Roller intake mechanism, straight-on front view">
+          <div class="roller-dot" id="rollerDot"></div>
+        </div>
+      </div>
+
+      <svg id="connectorSvg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 Z" fill="var(--copper-bright)"/>
+          </marker>
+        </defs>
+        <path id="connectorPathHalo" fill="none" stroke="rgba(10,16,26,0.55)" stroke-width="5" stroke-linecap="round"/>
+        <path id="connectorPath" fill="none" stroke="var(--copper-bright)" stroke-width="2.4" stroke-dasharray="7 5" stroke-linecap="round" marker-end="url(#arrowhead)"/>
+      </svg>
+
+      <div class="annotation">
+        <div class="a-arrow" id="rollerLabel">&rarr; THE ROLLER MECHANISM</div>
+        <p>A servo-driven shaft sits at the front of the chassis, wrapped with rubber bands stretched in an X pattern. Spaced correctly, the bands leave a gap between each "tooth" as the shaft spins.</p>
+        <p>Spinning forward, that gap catches the ping-pong ball on contact and rolls it up and into the chassis, the same catch-and-carry action as a tennis ball hopper, just scaled down and 3D-printed. Reversing the servo spins the shaft backward and releases the ball.</p>
+        <p>Most other teams used a bulldozer-style design instead: scoop the ball against a wall, lift the whole mechanism, and tilt it so gravity rolls the ball into a hopper. Ours had no lift or tilt at all, just directional rolling.</p>
+      </div>
+      </div><!-- /mech-diagram -->
+
+      <div class="inspo-row">
+        <img src="assets/robotathon/tennis-hopper.jpg" alt="Tennis ball hopper roller, the mechanism's inspiration">
+        <div>
+          <div class="i-label">THE INSPIRATION</div>
+          <p>A tennis ball hopper: a cage roller that catches balls in gaps between metal ribs as it rolls forward. We adapted the same principle at a much smaller scale, in 3D-printed plastic and rubber bands instead of steel.</p>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        <p>"The best mechanical design is awarded for the team that had the most robust and effective mechanical design for the competition. We the judges decided to give the award to the team that had a very creative design on how to pick up the ping pong ball — it was very effective and fairly quick at picking things up, a unique intake rubber band mechanism. Best mechanical design goes to Gordon Ratzky."</p>
+        <div class="cite">— Competition judge, live announcement, 4:25:11</div>
+      </div>
+
+      <p>The official award criteria: <em>"Most interesting functional implementation such as chassis shape, novel solution to the mechanical challenge, etc."</em> This is exactly the bar the roller mechanism was built to clear.</p>
+
+      <h2>What we learned</h2>
+      <p>Getting the roller to work reliably took real iteration, not a one-shot calculation:</p>
+      <div class="learn-grid">
+        <div class="learn-card">
+          <div class="n">01 &middot; SPEED</div>
+          <p>Running the intake too fast made the ball bounce off the rubber bands instead of getting caught. We had to slow the servo down and drive collection deliberately rather than for max speed.</p>
+        </div>
+        <div class="learn-card">
+          <div class="n">02 &middot; TOLERANCE</div>
+          <p>The gap between rubber bands had to be tuned by trial and error: too tight and the ball wouldn't enter, too loose and it wouldn't grip. No formula for it; just repeated testing.</p>
+        </div>
+      </div>
+
+      <h2>The build</h2>
+      <div class="build-grid">
+        <div class="build-item">
+          <img src="assets/robotathon/robotathon-workbench.jpg" alt="Workbench mid-build with tools and chassis parts">
+          <div class="bi-cap">01 &middot; The workbench, mid-assembly</div>
+        </div>
+        <div class="build-item">
+          <img src="assets/robotathon/eagle-view.jpg" alt="Top-down view of the chassis, drivetrain, and wiring">
+          <div class="bi-cap">02 &middot; Eagle view: drivetrain &amp; wiring</div>
+        </div>
+        <div class="build-item">
+          <img src="assets/robotathon/robotathon-robot.jpg" alt="Finished robot, three-quarter angle">
+          <div class="bi-cap">03 &middot; Finished chassis, 3/4 angle</div>
+        </div>
+      </div>
+      <p class="caption">Laser-cut plywood, twin DC drive motors, a breadboard-mounted motor driver, and a Sharp IR sensor on custom 3D-printed brackets.</p>
+
+      <h2>Anatomy of the robot</h2>
+      <p>A closer look at what's actually on the chassis, labeled from the eagle-view shot, useful if you don't have a robotics background and are wondering what half of this wiring even does.</p>
+
+      <div class="parts-diagram">
+        <svg viewBox="0 0 900 820" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono">
+          <image href="assets/robotathon/eagle-view.jpg" x="188" y="70" width="525" height="700" preserveAspectRatio="xMidYMid slice"/>
+
+          <g stroke="var(--copper-bright)" stroke-width="2" fill="none">
+            <path d="M 178 252 L 303.5 252"/>
+            <path d="M 178 546 L 272 546"/>
+            <path d="M 178 448 L 366.5 448"/>
+            <path d="M 722 434 L 513.5 434"/>
+            <path d="M 722 364 L 440 364"/>
+            <path d="M 722 630 L 450.5 630"/>
+          </g>
+
+          <g fill="var(--copper-bright)">
+            <circle cx="303.5" cy="252" r="5"/>
+            <circle cx="272" cy="546" r="5"/>
+            <circle cx="366.5" cy="448" r="5"/>
+            <circle cx="513.5" cy="434" r="5"/>
+            <circle cx="440" cy="364" r="5"/>
+            <circle cx="450.5" cy="630" r="5"/>
+          </g>
+
+          <g>
+            <rect x="2" y="233" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="12" y="256.5" fill="var(--silk)" font-size="13" font-weight="600">DRIVE MOTOR + WHEEL</text>
+
+            <rect x="2" y="527" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="12" y="550.5" fill="var(--silk)" font-size="13" font-weight="600">ROLLER SERVO</text>
+
+            <rect x="2" y="429" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="12" y="452.5" fill="var(--silk)" font-size="13" font-weight="600">TEAM MASCOT (REMY)</text>
+
+            <rect x="720" y="415" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="730" y="438.5" fill="var(--silk)" font-size="13" font-weight="600">COLOR SENSOR</text>
+
+            <rect x="720" y="345" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="730" y="368.5" fill="var(--silk)" font-size="13" font-weight="600">BREADBOARD + ESP32</text>
+
+            <rect x="720" y="607" width="178" height="46" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="730" y="627" fill="var(--silk)" font-size="12.5" font-weight="600">DISTANCE SENSOR</text>
+            <text x="730" y="644" fill="var(--silk)" font-size="12.5" font-weight="600">+ INTAKE MOUNT</text>
+          </g>
+        </svg>
+      </div>
+      <p class="caption">Best-guess labeling from the photo. Flag anything I got wrong and I'll fix it.</p>
+
+      <div class="component-legend">
+        <div class="cl-item">
+          <div class="cl-name">ESP32 MICROCONTROLLER</div>
+          <p>The brain of the robot. Runs the line-following, color-matching, and obstacle-avoidance logic, and handles the Bluetooth pairing with the PS4 controller (built into the ESP32 itself, no separate module needed).</p>
+        </div>
+        <div class="cl-item">
+          <div class="cl-name">L298N MOTOR DRIVER</div>
+          <p>Sits between the ESP32 and the two drive motors. The ESP32's logic-level signals aren't strong enough to actually turn a motor. This converts them into real current.</p>
+        </div>
+        <div class="cl-item">
+          <div class="cl-name">COLOR SENSOR</div>
+          <p>Powers the autonomous Color Sensor Challenge: reads and matches colors so the robot can earn a ping-pong ball before going to collect it.</p>
+        </div>
+        <div class="cl-item">
+          <div class="cl-name">QTR-8A LINE SENSOR ARRAY</div>
+          <p>Mounted underneath the chassis, so it's not visible in this shot. Reads the line beneath the robot for the autonomous Line Challenge.</p>
+        </div>
+        <div class="cl-item">
+          <div class="cl-name">CONTINUOUS ROTATION SERVO</div>
+          <p>Spins the rubber-band roller intake: forward to catch a ball, reversed to release it. The mechanism the Best Mechanical Design award was actually for.</p>
+        </div>
+        <div class="cl-item">
+          <div class="cl-name">DISTANCE SENSOR</div>
+          <p>Mounted at the rear, used for the Wall Challenge: detects obstacles so the robot can back off and steer around them on its own.</p>
+        </div>
+        <div class="cl-item">
+          <div class="cl-name">TT DC DRIVE MOTORS</div>
+          <p>Two of them, differential-driven. Handle everything from line-following to manual driving to crossing the coop bridge.</p>
+        </div>
+      </div>
+
+
+      <h2>Team & recognition</h2>
+      <div class="recognition-row">
+        <div class="cert-frame">
+          <img src="assets/robotathon/cert-rotated.jpg" alt="Best Mechanical Design certificate, RASTERCHEF 2024, Team Gordon Ratzky">
+          <div class="tf-cap">Best Mechanical Design diploma, presented by the panel of judges.</div>
+        </div>
+        <div class="team-frame">
+          <img src="assets/robotathon/robotathon-team.jpg" alt="Team photo at sunrise, competition morning">
+          <div class="tf-cap">The team, sunrise, the morning of competition day.</div>
+        </div>
+      </div>
+
+      <div class="tradition-note">
+        <div class="tn-label">AN OVERNIGHT TRADITION</div>
+        <p>It's common for teams to pull an all-nighter on the last day of Robotathon. Ours started building at 5PM Friday and worked straight through to Saturday's competition. Watching the sunrise together after finishing the robot is one of those team-bonding moments that sticks with you longer than the award does.</p>
+      </div>
+
+      <h2>Watch it live</h2>
+      <p>Full competition livestream, with our team's run and the award announcement:</p>
+      <div class="video-links">
+        <a class="video-link" href="https://www.youtube.com/watch?v=dDdF2ivEGGc&t=6580s" target="_blank">
+          <div><div class="vt">First match — Gordon Ratzky</div><div class="vd">Autonomous + driver-controlled run</div></div>
+          <div class="ts">1:49:40</div>
+        </a>
+        <a class="video-link" href="https://www.youtube.com/watch?v=dDdF2ivEGGc&t=15911s" target="_blank">
+          <div><div class="vt">Best Mechanical Design announcement</div><div class="vd">Judges explain the award, live</div></div>
+          <div class="ts">4:25:11</div>
+        </a>
+      </div>
+
+      <div class="full-img" style="margin-top:40px;">
+        <img src="assets/robotathon/robotathon-cohort.jpg" alt="Full Robotathon 2024 cohort group photo">
+      </div>
+      <p class="caption">The full Robotathon 2024 cohort, end of competition day.</p>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT VIEW ============ -->
+  <section class="view" id="view-about">
+    <div class="proj-hero" style="background:#EEF2F8;">
+      <svg viewBox="0 0 1400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="500" fill="#EEF2F8"/>
+        <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
+          <path d="M0 100 H1400 M0 200 H1400 M0 300 H1400 M0 400 H1400"/>
+          <path d="M200 0 V500 M500 0 V500 M800 0 V500 M1100 0 V500"/>
+        </g>
+        <circle cx="700" cy="250" r="120" fill="none" stroke="#3D6BFF" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.5"/>
+        <circle cx="700" cy="250" r="4" fill="#3D6BFF"/>
+      </svg>
+      <div class="scrim"></div>
+      <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+        <h1 class="display">About <span class="theme-tag">&mdash; Rafael Torres</span></h1>
+        <p class="subtitle">Where this started, and where it's going.</p>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <div class="stat-grid">
+        <div class="stat"><div class="num">UT '28</div><div class="label">ECE + ROBOTICS MINOR</div></div>
+        <div class="stat"><div class="num">Lima &rarr; ATX</div><div class="label">PERU TO AUSTIN, TEXAS</div></div>
+        <div class="stat"><div class="num">MS Next</div><div class="label">ROBOTICS ENGINEERING, POST-GRAD</div></div>
+      </div>
+
+      <p>Hi there! My name is Rafa, and I'm an Electrical &amp; Computer Engineering student at UT Austin with a minor in Robotics. I grew up in Lima, Peru, and my first real engineering discovery was a LEGO Mindstorms EV3 kit: building it, breaking it, rebuilding it into things it wasn't supposed to be. It taught me that circuits and code could make something move.</p>
+      <p>A few years later, my bedroom fan kept breaking at night, so I prototyped a replacement that could adjust its own speed based on the room's temperature using a sensor. Small project, but it was the first time I really felt like I was building something because I needed it, not just because it was cool.</p>
+
+      <h2>What changed</h2>
+      <p>The bigger shift came with Clouds-for-Change, a project that brought fog water catchers to 150 people in Peru who didn't have reliable water before. That was when it really landed for me: engineering has the power to solve real problems people actually have. That's what's kept pulling me toward it since then. The chance to build the skills to create that kind of change, to make a meaningful impact, not just for the sake of building things.</p>
+
+      <h2>Beyond engineering</h2>
+      <p>Outside of engineering, I'm a sucker for music. I've been playing instruments since I was a kid. Community work has mattered to me for even longer than engineering has: I helped rebuild houses for earthquake survivors in Chincha, Peru, before Clouds-for-Change came along. These days, that same instinct shows up as Engagement Chair for YNG Austin, where I help shape new experiences and events for our members.</p>
+
+      <h2>What's next</h2>
+      <p>Right now I'm putting that into practice with ASCEND Texas, where I'm helping build autonomy for an electric emergency response aircraft for GoAERO, NASA's autonomy-focused emergency response prize competition. Longer term, I envision building robots that support Peru's primary industries, work that's often dangerous, physically demanding, and repetitive, so people can move into safer, higher-value roles instead of carrying that risk themselves.</p>
+      <p>Between my academics, research, and the years I've spent in robotics orgs at UT, I've realized what I actually need next is a deeper technical foundation. So I've decided to pursue a Robotics Engineering Master's after I graduate from UT in May 2028.</p>
+
+      <div class="quote-block">
+        <p>At the end of the day, what keeps me in robotics isn't the tech itself. It's what it lets me build for people who need it. That's the only thing I've ever been sure I want to keep doing.</p>
+      </div>
+
+      <p>You can learn more about my work in my <a href="#" onclick="showView('contact');return false;" style="color:var(--copper-bright);">resume</a> and <a href="#" onclick="showView('home');return false;" style="color:var(--copper-bright);">projects</a> below!</p>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT VIEW ============ -->
+  <section class="view" id="view-contact">
+    <div class="proj-hero" style="background:#EEF2F8;">
+      <svg viewBox="0 0 1400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="500" fill="#EEF2F8"/>
+        <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
+          <path d="M0 100 H1400 M0 200 H1400 M0 300 H1400 M0 400 H1400"/>
+          <path d="M200 0 V500 M500 0 V500 M800 0 V500 M1100 0 V500"/>
+        </g>
+        <g stroke="#3D6BFF" stroke-width="1.5" fill="none" opacity="0.6">
+          <path d="M650 200 L700 250 L750 200" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M650 300 L700 250 L750 300" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+      <div class="scrim"></div>
+      <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+        <h1 class="display">Contact</h1>
+        <p class="subtitle">Reach out directly, or grab my resume below.</p>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <div class="contact-wrap">
+        <div class="contact-monogram">RT</div>
+        <div class="contact-name">Rafael Torres</div>
+        <div class="contact-title">ECE + Robotics &middot; UT Austin</div>
+      </div>
+
+      <div class="video-links" style="max-width:480px; margin:0 auto;">
+        <a class="video-link" href="mailto:rafaeltorresraffo@gmail.com">
+          <div><div class="vt">Email</div><div class="vd">rafaeltorresraffo@gmail.com</div></div>
+          <div class="ts">Send &rarr;</div>
+        </a>
+        <a class="video-link" href="tel:+17374652004">
+          <div><div class="vt">Phone</div><div class="vd">+1 (737) 465-2004</div></div>
+          <div class="ts">Call &rarr;</div>
+        </a>
+        <a class="video-link" href="https://www.linkedin.com/in/rafaeltorres2005/" target="_blank">
+          <div><div class="vt">LinkedIn</div><div class="vd">/in/rafaeltorres2005</div></div>
+          <div class="ts">Visit &rarr;</div>
+        </a>
+        <a class="video-link" style="cursor:default;">
+          <div><div class="vt">Resume</div><div class="vd">Coming soon</div></div>
+          <div class="ts">Soon</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  function showView(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + name);
+    if(navEl) navEl.classList.add('active');
+    window.scrollTo(0,0);
+    if(name === 'robotathon'){
+      requestAnimationFrame(() => requestAnimationFrame(drawConnector));
+    }
+  }
+
+  function drawConnector(){
+    const wrap = document.getElementById('mechDiagram');
+    const dot = document.getElementById('rollerDot');
+    const label = document.getElementById('rollerLabel');
+    const svg = document.getElementById('connectorSvg');
+    const path = document.getElementById('connectorPath');
+    const halo = document.getElementById('connectorPathHalo');
+    if(!wrap || !dot || !label || !svg || !path || !halo) return;
+    if(wrap.offsetWidth === 0) return; // view not visible yet
+
+    const wrapRect = wrap.getBoundingClientRect();
+    const dotRect = dot.getBoundingClientRect();
+    const labelRect = label.getBoundingClientRect();
+
+    const x1 = dotRect.left + dotRect.width / 2 - wrapRect.left;
+    const y1 = dotRect.top + dotRect.height / 2 - wrapRect.top;
+    const x2 = labelRect.right - wrapRect.left - 4;
+    const y2 = labelRect.top + labelRect.height / 2 - wrapRect.top;
+
+    svg.setAttribute('viewBox', `0 0 ${wrapRect.width} ${wrapRect.height}`);
+    svg.setAttribute('width', wrapRect.width);
+    svg.setAttribute('height', wrapRect.height);
+
+    // flipped-L: drop straight down from the roller, then hook left into the word "MECHANISM"
+    const bend = y1 + (y2 - y1) * 0.72;
+    const d = `M ${x1} ${y1} C ${x1} ${bend}, ${x2 + 46} ${y2}, ${x2} ${y2}`;
+    halo.setAttribute('d', d);
+    path.setAttribute('d', d);
+  }
+
+  window.addEventListener('load', () => requestAnimationFrame(drawConnector));
+  window.addEventListener('resize', drawConnector);
+</script>
+
+</body>
+</html>
