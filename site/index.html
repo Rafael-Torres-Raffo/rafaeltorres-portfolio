@@ -163,17 +163,9 @@
     background:linear-gradient(180deg, rgba(247,249,252,0) 0%, rgba(247,249,252,0) 52%, rgba(247,249,252,0.55) 72%, rgba(247,249,252,0.92) 88%, rgba(247,249,252,0.98) 100%);
   }
   .proj-hero-content{
-    text-shadow:0 1px 2px rgba(255,255,255,0.5);
+    max-width:1160px; margin:0 auto;
+    padding:32px 32px 0;
   }
-  .proj-hero-content{
-    position:absolute; bottom:0; left:0; right:0; max-width:1160px; margin:0 auto;
-    padding:0 32px 40px;
-  }
-  .back-link{
-    font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--silk-dim); text-decoration:none;
-    display:inline-flex; align-items:center; gap:6px; margin-bottom:18px;
-  }
-  .back-link:hover{color:var(--copper-bright);}
   .badge-row{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
   .badge{
     font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.04em;
@@ -476,10 +468,10 @@
 
   <section class="view" id="view-ascend">
     <div class="proj-hero">
-      <img src="assets/ascend/cad-final.jpg" alt="CAD render of the A-150 paramotor drone under its parafoil wing">
+      <img src="assets/ascend/cad-final.jpg" alt="CAD render of the A-150 paramotor drone under its parafoil wing" style="object-fit:contain; background:#EEF2F8;">
       <div class="scrim"></div>
-      <div class="proj-hero-content">
-        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+    </div>
+    <div class="proj-hero-content">
         <div class="badge-row">
           <span class="badge award">★ GoAERO Stage 1 Winner</span>
           <span class="badge meta">NASA-Recognized</span>
@@ -487,7 +479,6 @@
         </div>
         <h1 class="display">ASCEND <span class="theme-tag">&mdash; A-150</span></h1>
         <p class="subtitle">Building the brake-control "muscles and nerves" for an autonomous emergency-response paraglider drone.</p>
-      </div>
     </div>
 
     <div class="proj-body">
@@ -696,15 +687,14 @@
         </defs>
       </svg>
       <div class="scrim"></div>
-      <div class="proj-hero-content">
-        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+    </div>
+    <div class="proj-hero-content">
         <div class="badge-row">
           <span class="badge meta">Freshman Research Initiative</span>
           <span class="badge meta">Spring 2025</span>
         </div>
         <h1 class="display">FRI 1 <span class="theme-tag">&mdash; Instruction Clarity</span></h1>
         <p class="subtitle">A semester studying why robot policies misunderstand human language, and building a layer that fixes it before the robot ever sees the instruction.</p>
-      </div>
     </div>
 
     
@@ -799,15 +789,14 @@
         </g>
       </svg>
       <div class="scrim"></div>
-      <div class="proj-hero-content">
-        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+    </div>
+    <div class="proj-hero-content">
         <div class="badge-row">
           <span class="badge meta">Freshman Research Initiative</span>
           <span class="badge meta">Fall 2025</span>
         </div>
         <h1 class="display">FRI 2 <span class="theme-tag">&mdash; SawyerRoll</span></h1>
         <p class="subtitle">The second semester of the Robot Learning stream, under Professor Junhong Xu.</p>
-      </div>
     </div>
 
     <div class="proj-body">
@@ -968,8 +957,8 @@
         </defs>
       </svg>
       <div class="scrim"></div>
-      <div class="proj-hero-content">
-        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+    </div>
+    <div class="proj-hero-content">
         <div class="badge-row">
           <span class="badge meta">Learning Agents Research Group</span>
           <span class="badge meta">Solo Research</span>
@@ -977,7 +966,6 @@
         </div>
         <h1 class="display">Memory Research <span class="theme-tag">&mdash; ManiSkill-HAB</span></h1>
         <p class="subtitle">Getting a robot to take commands one at a time, mid-task, without losing 40 seconds or losing track of what it was already doing.</p>
-      </div>
     </div>
 
     <div class="proj-body">
@@ -1123,8 +1111,8 @@
         </g>
       </svg>
       <div class="scrim"></div>
-      <div class="proj-hero-content">
-        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+    </div>
+    <div class="proj-hero-content">
         <div class="badge-row">
           <span class="badge award">&#9733; Full Marks on Checkout</span>
           <span class="badge meta">ECE 319K</span>
@@ -1132,7 +1120,6 @@
         </div>
         <h1 class="display">Connect 4 <span class="theme-tag">&mdash; Embedded Systems</span></h1>
         <p class="subtitle">A full hardware/software system built from scratch on a TI microcontroller: graphics, sampled sound, interrupts, and a bilingual UI, working together in real time.</p>
-      </div>
     </div>
 
     <div class="proj-body">
@@ -1200,8 +1187,8 @@
     <div class="proj-hero">
       <img src="assets/robotathon/robotathon-hero.jpg" alt="Rafael assembling the Robotathon robot at the workbench">
       <div class="scrim"></div>
-      <div class="proj-hero-content">
-        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+    </div>
+    <div class="proj-hero-content">
         <div class="badge-row">
           <span class="badge award">★ Best Mechanical Design</span>
           <span class="badge meta">Team Gordon Ratzky</span>
@@ -1209,7 +1196,6 @@
         </div>
         <h1 class="display">Robotathon 2024 <span class="theme-tag">— RasterChef</span></h1>
         <p class="subtitle">A ping-pong-ball collection robot, and a rubber-band roller mechanism nobody else on the field had thought to try.</p>
-      </div>
     </div>
 
     <div class="proj-body">
@@ -1444,11 +1430,10 @@
         <circle cx="700" cy="250" r="4" fill="#3D6BFF"/>
       </svg>
       <div class="scrim"></div>
-      <div class="proj-hero-content">
-        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+    </div>
+    <div class="proj-hero-content">
         <h1 class="display">About <span class="theme-tag">&mdash; Rafael Torres</span></h1>
         <p class="subtitle">Where this started, and where it's going.</p>
-      </div>
     </div>
 
     <div class="proj-body">
@@ -1481,29 +1466,23 @@
 
   <!-- ============ CONTACT VIEW ============ -->
   <section class="view" id="view-contact">
-    <div class="proj-hero" style="background:#EEF2F8;">
-      <svg viewBox="0 0 1400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
-        <rect width="1400" height="500" fill="#EEF2F8"/>
+    <div class="proj-hero" style="background:#EEF2F8; height:120px; min-height:120px;">
+      <svg viewBox="0 0 1400 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="120" fill="#EEF2F8"/>
         <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
-          <path d="M0 100 H1400 M0 200 H1400 M0 300 H1400 M0 400 H1400"/>
-          <path d="M200 0 V500 M500 0 V500 M800 0 V500 M1100 0 V500"/>
-        </g>
-        <g stroke="#3D6BFF" stroke-width="1.5" fill="none" opacity="0.6">
-          <path d="M650 200 L700 250 L750 200" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M650 300 L700 250 L750 300" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M200 0 V120 M500 0 V120 M800 0 V120 M1100 0 V120"/>
         </g>
       </svg>
       <div class="scrim"></div>
-      <div class="proj-hero-content">
-        <a href="#" class="back-link" onclick="showView('home');return false;">&larr; back to index</a>
+    </div>
+    <div class="proj-hero-content">
         <h1 class="display">Contact</h1>
         <p class="subtitle">Reach out directly, or grab my resume below.</p>
-      </div>
     </div>
 
     <div class="proj-body">
       <div class="contact-wrap">
-        <div class="contact-monogram">RT</div>
+        <img class="contact-photo" src="assets/headshot.jpg" alt="Rafael Torres">
         <div class="contact-name">Rafael Torres</div>
         <div class="contact-title">ECE + Robotics &middot; UT Austin</div>
       </div>
