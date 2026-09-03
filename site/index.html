@@ -229,12 +229,13 @@
   .learn-card p{font-size:13.5px; margin:0; color:var(--silk-dim);}
 
   .img-row{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:24px 0;}
+  .img-row img{height:260px; object-fit:cover;}
   .img-row-3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin:24px 0;}
   .img-row-3 img{width:100%; border-radius:6px; border:1px solid var(--line); display:block;}
   .img-row img, .full-img img{width:100%; border-radius:6px; border:1px solid var(--line); display:block;}
-  .full-img{margin:24px 0;}
+  .full-img{max-width:640px; margin:24px auto;}
 
-  .video-embed{position:relative; width:100%; padding-top:56.25%; border-radius:6px; overflow:hidden; border:1px solid var(--line); margin:20px 0; background:#000;}
+  .video-embed{position:relative; width:100%; max-width:640px; aspect-ratio:16/9; border-radius:6px; overflow:hidden; border:1px solid var(--line); margin:20px auto; background:#000;}
   .video-embed iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
   .video-links{display:flex; flex-direction:column; gap:10px; margin:20px 0;}
   .video-link{
@@ -631,9 +632,18 @@
       </div>
       <p>Immediate next steps (Summer 2026): continued machine-vision data collection, finishing linear actuator implementation, a new battery installation, structural work on the frame, remote control of braking and steering, and more field tests. Beyond the competition itself, the team is also exploring applications for the platform outside of emergency response.</p>
 
-      <h2>Team & recognition</h2>
-      <div class="full-img">
+      <h2>Team</h2>
+      <div class="full-img" style="position:relative;">
         <img src="assets/ascend/team-photo.jpg" alt="ASCEND team group photo with the parafoil wing laid out and the A-150 chassis in front">
+        <svg viewBox="0 0 1011 1200" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
+          <defs>
+            <marker id="thatsme-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#3D6BFF"/>
+            </marker>
+          </defs>
+          <path d="M615 885 Q560 940 528 988" stroke="#3D6BFF" stroke-width="4" fill="none" marker-end="url(#thatsme-arrow)"/>
+        </svg>
+        <div class="hero-tag" style="left:57%; top:67%;">That's me!</div>
       </div>
       <p class="caption">The ASCEND team, with the A-150 chassis and parafoil wing laid out for a field test.</p>
       <p><strong>Faculty Advisor:</strong> Christian Claudel</p>
@@ -1391,14 +1401,14 @@
       <h2>Watch it live</h2>
       <p>Full competition livestream, with our team's run and the award announcement:</p>
       <div class="video-embed">
-        <iframe id="robotathon-video" src="https://www.youtube.com/embed/dDdF2ivEGGc?start=6580" title="Robotathon 2024 livestream" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="robotathon-video" src="https://www.youtube-nocookie.com/embed/dDdF2ivEGGc?start=6580" title="Robotathon 2024 livestream" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="video-links">
-        <a class="video-link" href="https://www.youtube.com/watch?v=dDdF2ivEGGc&t=6580s" target="_blank" onclick="document.getElementById('robotathon-video').src='https://www.youtube.com/embed/dDdF2ivEGGc?start=6580&autoplay=1';return false;">
+        <a class="video-link" href="https://www.youtube.com/watch?v=dDdF2ivEGGc&t=6580s" target="_blank" onclick="document.getElementById('robotathon-video').src='https://www.youtube-nocookie.com/embed/dDdF2ivEGGc?start=6580&autoplay=1';return false;">
           <div><div class="vt">First match — Gordon Ratzky</div><div class="vd">Autonomous + driver-controlled run</div></div>
           <div class="ts">1:49:40</div>
         </a>
-        <a class="video-link" href="https://www.youtube.com/watch?v=dDdF2ivEGGc&t=15911s" target="_blank" onclick="document.getElementById('robotathon-video').src='https://www.youtube.com/embed/dDdF2ivEGGc?start=15911&autoplay=1';return false;">
+        <a class="video-link" href="https://www.youtube.com/watch?v=dDdF2ivEGGc&t=15911s" target="_blank" onclick="document.getElementById('robotathon-video').src='https://www.youtube-nocookie.com/embed/dDdF2ivEGGc?start=15911&autoplay=1';return false;">
           <div><div class="vt">Best Mechanical Design announcement</div><div class="vd">Judges explain the award, live</div></div>
           <div class="ts">4:25:11</div>
         </a>
