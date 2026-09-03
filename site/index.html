@@ -329,7 +329,7 @@
 
   /* ---- team/recognition v2 ---- */
   .recognition-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; align-items:stretch;}
-  .cert-frame{border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; background:var(--bg-panel-2);}
+  .cert-frame{border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; background:var(--bg-panel);}
   .cert-frame img{width:100%; flex:1; object-fit:contain; display:block; min-height:220px; padding:10px; box-sizing:border-box;}
   .cert-frame .tf-cap{padding:14px 16px; font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--silk-dimmer); border-top:1px solid var(--line); line-height:1.6;}
   .team-frame{border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column;}
@@ -372,7 +372,7 @@
         <li><a href="#" onclick="showView('ascend');return false;" id="nav-ascend">ascend</a></li>
         <li><a href="#" onclick="showView('fri1');return false;" id="nav-fri1">fri 1</a></li>
         <li><a href="#" onclick="showView('fri2');return false;" id="nav-fri2">fri 2</a></li>
-        <li><a href="#" onclick="showView('memory');return false;" id="nav-memory">memory</a></li>
+        <li><a href="#" onclick="showView('memory');return false;" id="nav-memory">memory research</a></li>
         <li><a href="#" onclick="showView('connect4');return false;" id="nav-connect4">connect4</a></li>
         <li><a href="#" onclick="showView('about');return false;" id="nav-about">about</a></li>
         <li><a href="#" onclick="showView('contact');return false;" id="nav-contact">contact</a></li>
@@ -626,7 +626,7 @@
       <h2>Field testing</h2>
       <p>Ground tests to validate the chassis and drivetrain, plus a wing-inflation test to check the parafoil deploys and holds shape correctly before attempting a tethered or free flight.</p>
       <div class="img-row">
-        <img src="assets/ascend/ground-test-walk.jpg" alt="Ground test, walking the ATV chassis along a path">
+        <img src="assets/ascend/ground-test-walk.jpg" alt="Ground test, walking the ATV chassis along a path" style="object-position:50% 82%;">
         <img src="assets/ascend/ground-test-field.jpg" alt="ATV chassis on its own in a grass field during a ground test">
       </div>
       <p class="caption">Ground tests on UT Austin campus, checking drivetrain response and stability before adding the wing.</p>
@@ -810,8 +810,23 @@
       <p class="caption">Fig. 2 from the paper. The corrected pipeline: the LLM intercepts the raw instruction, cross-references it against the current observation, and hands the policy a clean, unambiguous instruction instead.</p>
       <p>It worked essentially perfectly: Gemini correctly identified the intended item in every single trial, across every ambiguity and relevance level we tested. The only exception was the fully-degenerate case (&sigma; = &eta; = 0), where no real information was present at all, and it correctly output "none of the above."</p>
 
-      <div style="max-width:224px; margin:20px auto;">
-        <img style="border-radius:6px; border:1px solid var(--line); width:100%; display:block;" src="assets/fri/fri-libero-sim.jpg" alt="LIBERO-Object simulation environment: a robot arm above a table with bowls, a plate, and a cabinet">
+      <div style="position:relative; max-width:600px; margin:20px auto;">
+        <div style="width:224px; margin:0 auto;">
+          <img style="border-radius:6px; border:1px solid var(--line); width:100%; display:block;" src="assets/fri/fri-libero-sim.jpg" alt="LIBERO-Object simulation environment: a robot arm above a table with bowls, a plate, and a cabinet">
+        </div>
+        <svg viewBox="0 0 600 224" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
+          <defs>
+            <marker id="libero-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#3D6BFF"/>
+            </marker>
+          </defs>
+          <path d="M172 40 L305 50" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
+          <path d="M172 145 L245 140" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
+          <path d="M428 172 L345 170" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
+        </svg>
+        <div class="hero-tag" style="left:1%; top:8%; max-width:165px; text-align:center;">Robot gripper<br>(dual-finger)</div>
+        <div class="hero-tag" style="left:1%; top:58%;">Objects</div>
+        <div class="hero-tag" style="left:76%; top:68%;">Table</div>
       </div>
       <p class="caption">The LIBERO-Object simulation environment: the robot arm, table, and objects used across every test case.</p>
 
@@ -884,7 +899,7 @@
       <div class="full-img" style="max-width:320px; margin:20px auto;">
         <img src="assets/sawyerroll/fig5-convex-decomp.jpg" alt="The end-effector design broken down into 16 convex parts for MuJoCo collision" style="border-radius:6px; border:1px solid var(--line);">
       </div>
-      <p class="caption">The final end-effector, decomposed into 15 convex parts so MuJoCo could actually compute collisions against it.</p>
+      <p class="caption">The final end-effector, decomposed into 16 convex parts so MuJoCo could actually compute collisions against it.</p>
 
       <h2>The simulation environment</h2>
       <p>I built this in <strong>Robosuite</strong>, on top of the <strong>MuJoCo</strong> physics engine. The deciding factor was contact accuracy. Rolling depends entirely on friction and contact dynamics in a way that pick-and-place or throwing tasks don't need to model at all, so the physics engine mattered a lot more here than it usually does.</p>
@@ -1207,7 +1222,7 @@
       <p><strong>ECE 319K, Introduction to Embedded Systems</strong>, is UT Austin's foundational embedded systems course, built around Jonathan Valvano's curriculum and the TI MSPM0G3507 LaunchPad. Each lab through the semester adds a layer, GPIO, ADC, DAC, interrupts, timers, LCD graphics, sampled sound, until the final lab asks you to combine all of it into one working system you design yourself.</p>
 
       <h2>The assignment: Lab 9</h2>
-      <p>Lab 9 is that capstone, done in pairs. You propose your own project (or default to a Space Invaders clone), and a TA has to approve the proposal before you can start. Whatever you build, every project has to meet the same base requirements:</p>
+      <p>Lab 9 is that capstone, done in pairs. You propose your own project, and a TA has to approve the proposal before you can start. Whatever you build, every project has to meet the same base requirements:</p>
       <div class="component-legend">
         <div class="cl-item"><div class="cl-name">2+ EXTERNAL BUTTONS</div><p>Must actually affect gameplay, not just exist.</p></div>
         <div class="cl-item"><div class="cl-name">SLIDE-POT VIA ADC</div><p>Sampled at a rate satisfying the Nyquist theorem, playing a real role in the game.</p></div>
@@ -1426,7 +1441,6 @@
           </g>
         </svg>
       </div>
-      <p class="caption">Best-guess labeling from the photo. Flag anything I got wrong and I'll fix it.</p>
 
       <div class="component-legend">
         <div class="cl-item">
