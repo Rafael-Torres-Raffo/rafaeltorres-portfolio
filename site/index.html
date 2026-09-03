@@ -259,7 +259,7 @@
     border-radius:50%; background:rgba(61,107,255,0.28); border:2px solid var(--copper-bright); z-index:2;
     box-shadow:0 0 0 4px rgba(10,16,26,0.35), 0 0 10px rgba(61,107,255,0.55);
   }
-  .parts-diagram{max-width:600px; margin:24px auto; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--bg-panel);}
+  .parts-diagram{max-width:440px; margin:24px auto; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--bg-panel);}
   .parts-diagram svg{width:100%; height:auto; display:block;}
   .component-legend{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:28px 0;}
   .cl-item{border:1px solid var(--line); border-radius:6px; padding:14px 16px; background:var(--bg-panel);}
@@ -633,7 +633,7 @@
       <p>Immediate next steps (Summer 2026): continued machine-vision data collection, finishing linear actuator implementation, a new battery installation, structural work on the frame, remote control of braking and steering, and more field tests. Beyond the competition itself, the team is also exploring applications for the platform outside of emergency response.</p>
 
       <h2>Team</h2>
-      <div class="full-img" style="position:relative;">
+      <div class="full-img" style="position:relative; max-width:420px;">
         <img src="assets/ascend/team-photo.jpg" alt="ASCEND team group photo with the parafoil wing laid out and the A-150 chassis in front">
         <svg viewBox="0 0 1011 1200" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
           <defs>
@@ -641,9 +641,9 @@
               <path d="M0,0 L8,4 L0,8 Z" fill="#3D6BFF"/>
             </marker>
           </defs>
-          <path d="M615 885 Q560 940 528 988" stroke="#3D6BFF" stroke-width="4" fill="none" marker-end="url(#thatsme-arrow)"/>
+          <path d="M660 880 Q600 940 555 990" stroke="#3D6BFF" stroke-width="5" fill="none" marker-end="url(#thatsme-arrow)"/>
         </svg>
-        <div class="hero-tag" style="left:57%; top:67%;">That's me!</div>
+        <div class="hero-tag" style="left:60%; top:68%;">That's me!</div>
       </div>
       <p class="caption">The ASCEND team, with the A-150 chassis and parafoil wing laid out for a field test.</p>
       <p><strong>Faculty Advisor:</strong> Christian Claudel</p>
@@ -1304,46 +1304,46 @@
       <p>A closer look at what's actually on the chassis, labeled from the eagle-view shot, useful if you don't have a robotics background and are wondering what half of this wiring even does.</p>
 
       <div class="parts-diagram">
-        <svg viewBox="0 0 900 820" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono">
-          <image href="assets/robotathon/eagle-view.jpg" x="188" y="70" width="525" height="700" preserveAspectRatio="xMidYMid slice"/>
+        <svg viewBox="0 0 960 880" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono">
+          <image href="assets/robotathon/eagle-view.jpg" x="218" y="100" width="525" height="700" preserveAspectRatio="xMidYMid slice"/>
 
           <g stroke="var(--copper-bright)" stroke-width="2" fill="none">
-            <path d="M 178 252 L 303.5 252"/>
-            <path d="M 178 546 L 272 546"/>
-            <path d="M 178 448 L 366.5 448"/>
-            <path d="M 722 434 L 513.5 434"/>
-            <path d="M 722 364 L 440 364"/>
-            <path d="M 722 630 L 450.5 630"/>
+            <path d="M 208 282 L 333.5 282"/>
+            <path d="M 208 576 L 302 576"/>
+            <path d="M 208 478 L 396.5 478"/>
+            <path d="M 752 464 L 543.5 464"/>
+            <path d="M 752 394 L 470 394"/>
+            <path d="M 752 660 L 480.5 660"/>
           </g>
 
           <g fill="var(--copper-bright)">
-            <circle cx="303.5" cy="252" r="5"/>
-            <circle cx="272" cy="546" r="5"/>
-            <circle cx="366.5" cy="448" r="5"/>
-            <circle cx="513.5" cy="434" r="5"/>
-            <circle cx="440" cy="364" r="5"/>
-            <circle cx="450.5" cy="630" r="5"/>
+            <circle cx="333.5" cy="282" r="5"/>
+            <circle cx="302" cy="576" r="5"/>
+            <circle cx="396.5" cy="478" r="5"/>
+            <circle cx="543.5" cy="464" r="5"/>
+            <circle cx="470" cy="394" r="5"/>
+            <circle cx="480.5" cy="660" r="5"/>
           </g>
 
-          <g>
-            <rect x="2" y="233" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
-            <text x="12" y="256.5" fill="var(--silk)" font-size="13" font-weight="600">DRIVE MOTOR + WHEEL</text>
+          <g text-anchor="middle" dominant-baseline="central">
+            <rect x="32" y="263" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="121" y="283" fill="var(--silk)" font-size="13" font-weight="600">DRIVE MOTOR + WHEEL</text>
 
-            <rect x="2" y="527" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
-            <text x="12" y="550.5" fill="var(--silk)" font-size="13" font-weight="600">ROLLER SERVO</text>
+            <rect x="32" y="557" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="121" y="577" fill="var(--silk)" font-size="13" font-weight="600">ROLLER SERVO</text>
 
-            <rect x="2" y="429" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
-            <text x="12" y="452.5" fill="var(--silk)" font-size="13" font-weight="600">TEAM MASCOT (REMY)</text>
+            <rect x="32" y="459" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="121" y="479" fill="var(--silk)" font-size="13" font-weight="600">TEAM MASCOT (REMY)</text>
 
-            <rect x="720" y="415" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
-            <text x="730" y="438.5" fill="var(--silk)" font-size="13" font-weight="600">COLOR SENSOR</text>
+            <rect x="750" y="445" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="839" y="465" fill="var(--silk)" font-size="13" font-weight="600">COLOR SENSOR</text>
 
-            <rect x="720" y="345" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
-            <text x="730" y="368.5" fill="var(--silk)" font-size="13" font-weight="600">BREADBOARD + ESP32</text>
+            <rect x="750" y="375" width="178" height="38" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="839" y="395" fill="var(--silk)" font-size="13" font-weight="600">BREADBOARD + ESP32</text>
 
-            <rect x="720" y="607" width="178" height="46" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
-            <text x="730" y="627" fill="var(--silk)" font-size="12.5" font-weight="600">DISTANCE SENSOR</text>
-            <text x="730" y="644" fill="var(--silk)" font-size="12.5" font-weight="600">+ INTAKE MOUNT</text>
+            <rect x="750" y="637" width="178" height="46" rx="5" fill="var(--bg-panel-2)" stroke="var(--line-bright)" stroke-width="1.2"/>
+            <text x="839" y="653" fill="var(--silk)" font-size="12.5" font-weight="600">DISTANCE SENSOR</text>
+            <text x="839" y="670" fill="var(--silk)" font-size="12.5" font-weight="600">+ INTAKE MOUNT</text>
           </g>
         </svg>
       </div>
