@@ -332,7 +332,7 @@
   .cert-frame{border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; background:var(--bg-panel);}
   .cert-frame img{width:100%; flex:1; object-fit:contain; display:block; min-height:220px; padding:10px; box-sizing:border-box;}
   .cert-frame .tf-cap{padding:14px 16px; font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--silk-dimmer); border-top:1px solid var(--line); line-height:1.6;}
-  .team-frame{border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column;}
+  .team-frame{border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; background:var(--bg-panel);}
   .team-frame img{width:100%; flex:1; object-fit:cover; display:block; min-height:220px;}
   .team-frame .tf-cap{padding:14px 16px; font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--silk-dimmer); border-top:1px solid var(--line); line-height:1.6;}
 
@@ -810,23 +810,23 @@
       <p class="caption">Fig. 2 from the paper. The corrected pipeline: the LLM intercepts the raw instruction, cross-references it against the current observation, and hands the policy a clean, unambiguous instruction instead.</p>
       <p>It worked essentially perfectly: Gemini correctly identified the intended item in every single trial, across every ambiguity and relevance level we tested. The only exception was the fully-degenerate case (&sigma; = &eta; = 0), where no real information was present at all, and it correctly output "none of the above."</p>
 
-      <div style="position:relative; max-width:600px; margin:20px auto;">
+      <div style="position:relative; max-width:480px; margin:20px auto;">
         <div style="width:224px; margin:0 auto;">
           <img style="border-radius:6px; border:1px solid var(--line); width:100%; display:block;" src="assets/fri/fri-libero-sim.jpg" alt="LIBERO-Object simulation environment: a robot arm above a table with bowls, a plate, and a cabinet">
         </div>
-        <svg viewBox="0 0 600 224" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
+        <svg viewBox="0 0 480 224" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
           <defs>
             <marker id="libero-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 Z" fill="#3D6BFF"/>
             </marker>
           </defs>
-          <path d="M172 40 L305 50" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
-          <path d="M172 145 L245 140" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
-          <path d="M428 172 L345 170" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
+          <path d="M112 44 L193 47" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
+          <path d="M112 138 L146 137" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
+          <path d="M368 168 L302 168" stroke="#3D6BFF" stroke-width="2.5" fill="none" marker-end="url(#libero-arrow)"/>
         </svg>
-        <div class="hero-tag" style="left:1%; top:8%; max-width:165px; text-align:center;">Robot gripper<br>(dual-finger)</div>
-        <div class="hero-tag" style="left:1%; top:58%;">Objects</div>
-        <div class="hero-tag" style="left:76%; top:68%;">Table</div>
+        <div class="hero-tag" style="left:1%; top:7%; max-width:105px; text-align:center;">Robot gripper<br>(dual-finger)</div>
+        <div class="hero-tag" style="left:1%; top:55%;">Objects</div>
+        <div class="hero-tag" style="left:79%; top:65%;">Table</div>
       </div>
       <p class="caption">The LIBERO-Object simulation environment: the robot arm, table, and objects used across every test case.</p>
 
@@ -929,7 +929,7 @@
 
       <div class="img-row">
         <img src="assets/sawyerroll/fig7-success.jpg" alt="Screenshot of a successful demonstration, ball resting inside the target area">
-        <img src="assets/sawyerroll/fig8-failure.jpg" alt="Screenshot of an unsuccessful demonstration, ball having rolled off the table">
+        <img src="assets/sawyerroll/fig8-failure.jpg" alt="Screenshot of an unsuccessful demonstration, ball having rolled off the table" style="object-position:50% 75%;">
       </div>
       <p class="caption">Left: a successful trial, ball settled inside the target. Right: a failed trial, where the ball never settled and rolled straight off the table.</p>
 
