@@ -170,6 +170,11 @@
   #view-fri1 .proj-hero, #view-fri2 .proj-hero{height:240px; min-height:220px;}
   #view-contact .proj-hero-content{padding-top:48px;}
   #view-contact .proj-body{padding-top:16px;}
+  .back-link{
+    font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--silk-dim); text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px; margin-bottom:14px;
+  }
+  .back-link:hover{color:var(--copper-bright);}
   .badge-row{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
   .badge{
     font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.04em;
@@ -368,12 +373,7 @@
     <nav>
       <ul>
         <li><a href="#" onclick="showView('home');return false;" id="nav-home" class="active">home</a></li>
-        <li><a href="#" onclick="showView('robotathon');return false;" id="nav-robotathon">robotathon</a></li>
-        <li><a href="#" onclick="showView('ascend');return false;" id="nav-ascend">ascend</a></li>
-        <li><a href="#" onclick="showView('fri1');return false;" id="nav-fri1">fri 1</a></li>
-        <li><a href="#" onclick="showView('fri2');return false;" id="nav-fri2">fri 2</a></li>
-        <li><a href="#" onclick="showView('memory');return false;" id="nav-memory">memory research</a></li>
-        <li><a href="#" onclick="showView('connect4');return false;" id="nav-connect4">connect4</a></li>
+        <li><a href="#" onclick="showView('projects');return false;" id="nav-projects">projects</a></li>
         <li><a href="#" onclick="showView('about');return false;" id="nav-about">about</a></li>
         <li><a href="#" onclick="showView('contact');return false;" id="nav-contact">contact</a></li>
       </ul>
@@ -429,13 +429,36 @@
       </div>
     </div>
 
-    <div class="section-label">
-      <h2>Projects</h2>
-      <span class="count">06 / 06</span>
-      <div class="rule"></div>
+    <div class="proj-body" style="max-width:680px; margin:0 auto; padding-top:10px;">
+      <h2>Summary</h2>
+      <p>Hi, I'm Rafa, an Electrical &amp; Computer Engineering student at UT Austin with a Robotics minor, originally from Lima, Peru. I got into engineering by taking apart a LEGO Mindstorms kit as a kid, and got serious about it after helping build fog water catchers that brought reliable water to 150 people back home. These days that's still what pulls me toward robotics: not the tech for its own sake, but what it lets me build for people who actually need it.</p>
+      <p>Right now that means working on autonomy for ASCEND's emergency-response aircraft. Six projects below cover the rest, from a laser-cut robot with a rubber-band roller intake to a paraglider drone's brake-control system.</p>
+      <p style="text-align:center; margin-top:32px;">
+        <a href="#" onclick="showView('projects');return false;" style="display:inline-block; font-family:'IBM Plex Mono'; font-size:13px; letter-spacing:0.04em; text-transform:uppercase; color:#fff; background:var(--copper-bright); padding:12px 28px; border-radius:4px; text-decoration:none;">View Projects &rarr;</a>
+      </p>
     </div>
 
-    <div class="projects">
+    <footer>
+      <span>© 2026 Rafael Torres</span>
+    </footer>
+  </section>
+
+  <!-- ============ PROJECTS HUB VIEW ============ -->
+  <section class="view" id="view-projects">
+    <div class="proj-hero" style="background:#EEF2F8; height:100px; min-height:100px;">
+      <svg viewBox="0 0 1400 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+        <rect width="1400" height="100" fill="#EEF2F8"/>
+        <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
+          <path d="M200 0 V100 M500 0 V100 M800 0 V100 M1100 0 V100"/>
+        </g>
+      </svg>
+    </div>
+    <div class="proj-hero-content">
+        <h1 class="display">Projects</h1>
+        <p class="subtitle">Six projects across robotics, embedded systems, and ML research. Click through to dig into any of them.</p>
+    </div>
+
+    <div class="projects" style="margin-top:40px;">
       <div class="card featured" onclick="showView('robotathon')">
         <div class="pin"><span class="dot"></span>FALL 2024 · IEEE RAS</div>
         <h3>Robotathon — Team Gordon Ratzky</h3>
@@ -496,6 +519,7 @@
       <div class="scrim"></div>
     </div>
     <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('projects');return false;">&larr; back to projects</a>
         <div class="badge-row">
           <span class="badge award">★ GoAERO Stage 1 Winner</span>
           <span class="badge meta">NASA-Recognized</span>
@@ -718,6 +742,7 @@
       <div class="scrim"></div>
     </div>
     <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('projects');return false;">&larr; back to projects</a>
         <div class="badge-row">
           <span class="badge meta">Freshman Research Initiative</span>
           <span class="badge meta">Spring 2025</span>
@@ -878,6 +903,7 @@
       <div class="scrim"></div>
     </div>
     <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('projects');return false;">&larr; back to projects</a>
         <div class="badge-row">
           <span class="badge meta">Freshman Research Initiative</span>
           <span class="badge meta">Fall 2025</span>
@@ -1059,6 +1085,7 @@
       <div class="scrim"></div>
     </div>
     <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('projects');return false;">&larr; back to projects</a>
         <div class="badge-row">
           <span class="badge meta">Learning Agents Research Group</span>
           <span class="badge meta">Solo Research</span>
@@ -1213,6 +1240,7 @@
       <div class="scrim"></div>
     </div>
     <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('projects');return false;">&larr; back to projects</a>
         <div class="badge-row">
           <span class="badge award">&#9733; Full Marks on Checkout</span>
           <span class="badge meta">ECE 319K</span>
@@ -1289,6 +1317,7 @@
       <div class="scrim"></div>
     </div>
     <div class="proj-hero-content">
+        <a href="#" class="back-link" onclick="showView('projects');return false;">&larr; back to projects</a>
         <div class="badge-row">
           <span class="badge award">★ Best Mechanical Design</span>
           <span class="badge meta">Team Gordon Ratzky</span>
@@ -1608,7 +1637,9 @@
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + name).classList.add('active');
     document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    const navEl = document.getElementById('nav-' + name);
+    const projectPages = ['robotathon','ascend','fri1','fri2','memory','connect4','projects'];
+    const navTarget = projectPages.includes(name) ? 'projects' : name;
+    const navEl = document.getElementById('nav-' + navTarget);
     if(navEl) navEl.classList.add('active');
     window.scrollTo(0,0);
     if(name === 'robotathon'){
