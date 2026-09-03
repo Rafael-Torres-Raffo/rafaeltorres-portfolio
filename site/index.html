@@ -904,7 +904,7 @@
         <div class="stat"><div class="num">3000 / 4</div><div class="label">BALL FRICTION / DENSITY</div></div>
       </div>
 
-      <p>A trial counted as successful if the ball stayed inside the target area for at least 5 seconds, a threshold I picked specifically because MuJoCo's contact physics for a rolling ball are never perfectly stable, so requiring the ball to sit dead still wasn't realistic. I also wrote a reward function to score every trial:</p>
+      <p>A trial counted as successful if the ball stayed inside the target area for at least 5 seconds, a threshold I picked specifically because MuJoCo's contact physics for a rolling ball are never perfectly stable, so requiring the ball to sit dead still wasn't realistic. I set the episode horizon at 1300 steps after testing found that was enough time for a trial to reach a successful state without letting failed trials run indefinitely. I also wrote a reward function to score every trial:</p>
 
       <div class="annotation">
         <div class="a-arrow">&rarr; REWARD FUNCTION</div>
@@ -940,6 +940,21 @@
         <div class="stat"><div class="num">+29%</div><div class="label">BC-RICH VS BC-MIN, TOTAL REWARD</div></div>
         <div class="stat"><div class="num">+50%</div><div class="label">BC-RICH VS BC-MIN, FINAL REWARD</div></div>
         <div class="stat"><div class="num">30</div><div class="label">EVALUATION EPISODES PER POLICY</div></div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <caption>BC-MIN VS. BC-RICH &mdash; 30 EVALUATION EPISODES EACH</caption>
+          <thead>
+            <tr><th>Metric</th><th>BC-Min</th><th>BC-Rich</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Total reward, mean &plusmn; SD</td><td>103.600 &plusmn; 6.404</td><td>133.508 &plusmn; 4.580</td></tr>
+            <tr><td>Total reward, min / max</td><td>92.633 (ep. 2) / 128.087 (ep. 8)</td><td>131.720 (ep. 28) / 157.979 (ep. 29)</td></tr>
+            <tr><td>Final reward, mean &plusmn; SD</td><td>0.234 &plusmn; 0.022</td><td>0.342 &plusmn; 0.027</td></tr>
+            <tr><td>Final reward, min / max</td><td>0.190 (ep. 2) / 0.280 (ep. 20)</td><td>0.329 (ep. 28) / 0.484 (ep. 29)</td></tr>
+          </tbody>
+        </table>
       </div>
 
       <p>The hypothesis held: across 30 evaluation episodes each, <strong>BC-Rich beat BC-Min by about 29% on total reward and about 50% on final reward</strong>, a large enough gap (about 5&times; BC-Min's own standard deviation) to be a real effect, not noise. The likely mechanism is <strong>compounding error</strong>: a behavioral-cloning policy only knows how to react to states it's seen before, and BC-Min, working from end-effector pose alone, has no way to tell when a small physics deviation (say, gravity pulling the arm slightly differently than expected) has knocked it off the trajectory it memorized. BC-Rich, with full joint state, has enough information to stay closer to the demonstrated behavior even after small deviations.</p>
