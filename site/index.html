@@ -168,7 +168,7 @@
     padding:32px 32px 0;
   }
   #view-fri1 .proj-hero, #view-fri2 .proj-hero{height:240px; min-height:220px;}
-  #view-contact .proj-hero-content{padding-top:14px;}
+  #view-contact .proj-hero-content{padding-top:48px;}
   .badge-row{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
   .badge{
     font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.04em;
@@ -205,6 +205,8 @@
   .proj-body h2{font-family:'Space Grotesk'; font-size:24px; margin:56px 0 18px; font-weight:600;}
   .proj-body h2:first-child{margin-top:0;}
   .proj-body p{color:var(--silk-dim); font-size:15.5px; line-height:1.75; margin-bottom:16px;}
+  .proj-body ul{color:var(--silk-dim); font-size:15.5px; line-height:1.75; margin:0 0 16px; padding-left:22px;}
+  .proj-body li{margin-bottom:4px;}
   .proj-body strong{color:var(--silk); font-weight:600;}
 
   .quote-block{
@@ -343,7 +345,7 @@
     </a>
     <nav>
       <ul>
-        <li><a href="#" onclick="showView('home');return false;" id="nav-home" class="active">index</a></li>
+        <li><a href="#" onclick="showView('home');return false;" id="nav-home" class="active">home</a></li>
         <li><a href="#" onclick="showView('robotathon');return false;" id="nav-robotathon">robotathon</a></li>
         <li><a href="#" onclick="showView('ascend');return false;" id="nav-ascend">ascend</a></li>
         <li><a href="#" onclick="showView('fri1');return false;" id="nav-fri1">fri 1</a></li>
@@ -413,7 +415,6 @@
 
     <div class="projects">
       <div class="card featured" onclick="showView('robotathon')">
-        <div class="status">complete</div>
         <div class="pin"><span class="dot"></span>FALL 2024 · IEEE RAS</div>
         <h3>Robotathon — Team Gordon Ratzky</h3>
         <p>First-semester build: a ping-pong-ball collection robot with a rubber-band roller intake inspired by tennis ball hoppers. Won Best Mechanical Design.</p>
@@ -422,7 +423,6 @@
       </div>
 
       <div class="card featured" onclick="showView('ascend')">
-        <div class="status">in progress</div>
         <div class="pin"><span class="dot"></span>SEP 2025 – PRESENT · ASCEND</div>
         <h3>ASCEND — A-150</h3>
         <p>Built the brake-control "muscles and nerves" for an autonomous emergency-response paraglider drone. GoAERO Prize Stage 1 winner, NASA-recognized.</p>
@@ -431,7 +431,6 @@
       </div>
 
       <div class="card featured" onclick="showView('fri1')">
-        <div class="status">in progress</div>
         <div class="pin"><span class="dot"></span>SPRING 2025 &middot; FRI / ROBIN LAB</div>
         <h3>FRI 1 &mdash; Instruction Clarity</h3>
         <p>What FRI is, how the Robot Learning stream works, and a Spring 2025 paper on instruction clarity in a generalist robot policy.</p>
@@ -440,7 +439,6 @@
       </div>
 
       <div class="card featured" onclick="showView('fri2')">
-        <div class="status">in progress</div>
         <div class="pin"><span class="dot"></span>FALL 2025 &middot; FRI / ROBIN LAB</div>
         <h3>FRI 2 &mdash; SawyerRoll</h3>
         <p>The second semester's mechanical and RL project under Professor Xu, and how it led directly to the Memory Research invitation.</p>
@@ -449,7 +447,6 @@
       </div>
 
       <div class="card featured" onclick="showView('memory')">
-        <div class="status">in progress</div>
         <div class="pin"><span class="dot"></span>SPRING 2026 · LEARNING AGENTS RESEARCH GROUP</div>
         <h3>Memory Research</h3>
         <p>Solo research invited by Professor Junhong Xu: dynamic goal injection for interactive long-horizon manipulation in ManiSkill-HAB.</p>
@@ -458,7 +455,6 @@
       </div>
 
       <div class="card featured" onclick="showView('connect4')">
-        <div class="status">in progress</div>
         <div class="pin"><span class="dot"></span>JAN – MAY 2025 · ECE 319K</div>
         <h3>Connect 4 &mdash; Embedded Systems</h3>
         <p>A full-system embedded build on a TI LaunchPad: LCD graphics, sampled sound, interrupts, and a bilingual UI, engineered from scratch.</p>
@@ -469,7 +465,6 @@
 
     <footer>
       <span>© 2026 Rafael Torres</span>
-      <span>DRAFT MOCKUP: content in progress</span>
     </footer>
   </section>
 
@@ -779,11 +774,11 @@
           <path d="M200 0 V500 M500 0 V500 M800 0 V500 M1100 0 V500"/>
         </g>
         <g font-family="IBM Plex Mono" font-size="13" fill="#4B5567">
-          <text x="150" y="150" fill="#111826" font-size="16" font-weight="bold">FRI &mdash; Fall 2025</text>
-          <text x="150" y="172" fill="#8993A6" font-size="11">Robot Learning Stream, under Professor Xu</text>
-          <text x="150" y="230" fill="#3D6BFF" font-size="12">Custom end-effector design</text>
-          <text x="150" y="254" fill="#3D6BFF" font-size="12">Robosuite / MuJoCo environment</text>
-          <text x="150" y="278" fill="#3D6BFF" font-size="12">BC-Min, BC-Rich, Diffusion policies</text>
+          <text x="150" y="186" fill="#111826" font-size="16" font-weight="bold">FRI &mdash; Fall 2025</text>
+          <text x="150" y="208" fill="#8993A6" font-size="11">Robot Learning Stream, under Professor Xu</text>
+          <text x="150" y="266" fill="#3D6BFF" font-size="12">Custom end-effector design</text>
+          <text x="150" y="290" fill="#3D6BFF" font-size="12">Robosuite / MuJoCo environment</text>
+          <text x="150" y="314" fill="#3D6BFF" font-size="12">BC-Min, BC-Rich, Diffusion policies</text>
         </g>
       </svg>
       <div class="scrim"></div>
@@ -865,7 +860,7 @@
         <img src="assets/sawyerroll/fig10-loss-bcrich.jpg" alt="BC-Rich training loss versus epoch">
         <img src="assets/sawyerroll/fig11-loss-diffusion.jpg" alt="Diffusion policy training loss versus epoch">
       </div>
-      <p class="caption">Training loss curves for BC-Min, BC-Rich, and Diffusion. All three converge quickly, but the diffusion policy's loss drops furthest.</p>
+      <p class="caption" style="text-align:center;">Training loss curves for BC-Min, BC-Rich, and Diffusion. All three converge quickly, but the diffusion policy's loss drops furthest.</p>
 
       <div class="stat-grid">
         <div class="stat"><div class="num">+29%</div><div class="label">BC-RICH VS BC-MIN, TOTAL REWARD</div></div>
@@ -1465,15 +1460,6 @@
 
   <!-- ============ CONTACT VIEW ============ -->
   <section class="view" id="view-contact">
-    <div class="proj-hero" style="background:#EEF2F8; height:60px; min-height:60px;">
-      <svg viewBox="0 0 1400 60" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
-        <rect width="1400" height="60" fill="#EEF2F8"/>
-        <g stroke="rgba(17,24,38,0.06)" stroke-width="1">
-          <path d="M200 0 V60 M500 0 V60 M800 0 V60 M1100 0 V60"/>
-        </g>
-      </svg>
-      <div class="scrim"></div>
-    </div>
     <div class="proj-hero-content">
         <h1 class="display">Contact</h1>
         <p class="subtitle">Reach out directly, or grab my resume below.</p>
