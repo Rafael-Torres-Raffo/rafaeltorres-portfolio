@@ -190,7 +190,7 @@
     display:flex; gap:20px; align-items:center; border:1px solid var(--line);
     border-radius:6px; padding:20px; background:var(--bg-panel); margin:24px 0;
   }
-  .theme-card img{width:74px; height:74px; border-radius:50%; flex-shrink:0; border:1px solid var(--line-bright);}
+  .theme-card img{width:74px; height:74px; border-radius:50%; flex-shrink:0; border:1px solid var(--line-bright); object-fit:cover;}
   .theme-card p{margin:0; font-size:13.5px; color:var(--silk-dim); line-height:1.6;}
   .theme-card .t-label{font-family:'IBM Plex Mono'; font-size:11px; color:var(--copper-bright); margin-bottom:6px; letter-spacing:0.04em;}
   .contact-wrap{max-width:480px; margin:24px auto 40px; text-align:center;}
@@ -511,6 +511,11 @@
       <p>The competition runs in three stages: a technical-paper "paper stage," a building phase requiring a working subscale or full-scale flyer, and a Final Fly-Off in February 2027 where surviving teams fly real emergency-response missions judged on <strong>Productivity</strong> (ferrying 700+ lb of cumulative payload), <strong>Adversity</strong> (takeoff/landing cycles from rough terrain), and <strong>Maneuvering</strong> (a slalom/obstacle course with spot landings), all built around a standardized 165cm, 120lb test payload nicknamed "Alex."</p>
       <p>ASCEND's entry, the <strong>A-150</strong>, is a paramotor drone: a wheeled, ATV-style chassis flown under a steerable parafoil wing, designed to perform heavy-lift, long-range cargo operations cheaply from unimproved terrain. Out of more than 1,400 innovators from 85 countries, ASCEND was selected as one of just <strong>22 Stage 1 winning teams</strong> worldwide, and separately recognized with a <strong>US University Innovation Award, with support from NASA</strong>. The team is based at UT Austin under faculty advisor <strong>Christian Claudel</strong>.</p>
 
+      <div class="full-img" style="max-width:420px;">
+        <img src="assets/ascend/cad-final.jpg" alt="CAD render of the A-150 paramotor drone under its parafoil wing">
+      </div>
+      <p class="caption">The A-150: ASCEND's entry, and the design that won Stage 1.</p>
+
       <div class="stat-grid">
         <div class="stat"><div class="num">22</div><div class="label">STAGE 1 WINNERS, OF 1,400+ TEAMS</div></div>
         <div class="stat"><div class="num">$2M+</div><div class="label">TOTAL COMPETITION PRIZE POOL</div></div>
@@ -718,7 +723,7 @@
           <span class="badge meta">Spring 2025</span>
         </div>
         <h1 class="display">FRI 1 <span class="theme-tag">&mdash; Instruction Clarity</span></h1>
-        <p class="subtitle">A semester studying why robot policies misunderstand human language, and building a layer that fixes it before the robot ever sees the instruction.</p>
+        <p class="subtitle">A semester studying why robots get confused by everyday instructions, like "grab that thing and put it over there," and building a step that cleans up a vague command before the robot ever acts on it. Done under Dr. Ben Abbatematteo.</p>
     </div>
 
     
@@ -878,7 +883,7 @@
           <span class="badge meta">Fall 2025</span>
         </div>
         <h1 class="display">FRI 2 <span class="theme-tag">&mdash; SawyerRoll</span></h1>
-        <p class="subtitle">The second semester of the Robot Learning stream, under Professor Junhong Xu.</p>
+        <p class="subtitle">Teaching a robot arm to pick up a ball and roll it to a specific spot on purpose, using a custom scoop-shaped tool I designed and built myself. Done under Professor Junhong Xu.</p>
     </div>
 
     <div class="proj-body">
@@ -1060,7 +1065,7 @@
           <span class="badge meta">Spring 2026</span>
         </div>
         <h1 class="display">Memory Research <span class="theme-tag">&mdash; ManiSkill-HAB</span></h1>
-        <p class="subtitle">Getting a robot to take commands one at a time, mid-task, without losing 40 seconds or losing track of what it was already doing.</p>
+        <p class="subtitle">Letting a robot take a new instruction in the middle of a task, like "actually, grab the blue cup instead," without it stopping, forgetting everything, and starting over from scratch.</p>
     </div>
 
     <div class="proj-body">
@@ -1290,7 +1295,7 @@
           <span class="badge meta">Fall 2024</span>
         </div>
         <h1 class="display">Robotathon 2024 <span class="theme-tag">— RasterChef</span></h1>
-        <p class="subtitle">A ping-pong-ball collection robot, and a rubber-band roller mechanism nobody else on the field had thought to try.</p>
+        <p class="subtitle">A robot that picks up ping-pong balls using a simple spinning rubber-band roller I designed, a trick no other team in the competition tried, and that ended up winning Best Mechanical Design.</p>
     </div>
 
     <div class="proj-body">
