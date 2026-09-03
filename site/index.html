@@ -169,6 +169,7 @@
   }
   #view-fri1 .proj-hero, #view-fri2 .proj-hero{height:240px; min-height:220px;}
   #view-contact .proj-hero-content{padding-top:48px;}
+  #view-contact .proj-body{padding-top:16px;}
   .badge-row{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
   .badge{
     font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.04em;
@@ -234,6 +235,13 @@
   .img-row-3 img{width:100%; border-radius:6px; border:1px solid var(--line); display:block;}
   .img-row img, .full-img img{width:100%; border-radius:6px; border:1px solid var(--line); display:block;}
   .full-img{max-width:640px; margin:24px auto;}
+  .side-by-side{display:flex; gap:20px; align-items:center; margin:24px 0;}
+  .side-by-side img{width:280px; max-width:45%; border-radius:6px; border:1px solid var(--line); flex-shrink:0; display:block;}
+  .side-by-side p{margin:0;}
+  @media(max-width:820px){
+    .side-by-side{flex-direction:column; align-items:stretch;}
+    .side-by-side img{width:100%; max-width:100%;}
+  }
 
   .video-embed{position:relative; width:100%; max-width:640px; aspect-ratio:16/9; border-radius:6px; overflow:hidden; border:1px solid var(--line); margin:20px auto; background:#000;}
   .video-embed iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
@@ -548,10 +556,10 @@
 
       <p><strong>Hardware chain:</strong> two 500kg PSD-S1 S-type load cells &rarr; AD620 instrumentation amplifier modules &rarr; ADS1256 24-bit ADC &rarr; Raspberry Pi 5 over SPI (lgpio library). I took a soldering course specifically to hand-build the amplifier circuits myself, and designed the full wiring diagram from scratch, again starting from an undocumented base.</p>
 
-      <div class="full-img">
+      <div class="side-by-side">
         <img src="assets/ascend/wiring-diagram.jpg" alt="Hand-drawn wiring diagram for the dual load cell to AD620 amplifier to ADS1256 ADC to Raspberry Pi 5 signal chain">
+        <p class="caption">The full signal chain, diagrammed from scratch: two strain gauges &rarr; AD620 amplifiers &rarr; ADS1256 ADC &rarr; Raspberry Pi 5, with GPIO pin mapping for the SPI connection.</p>
       </div>
-      <p class="caption">The full signal chain, diagrammed from scratch: two strain gauges &rarr; AD620 amplifiers &rarr; ADS1256 ADC &rarr; Raspberry Pi 5, with GPIO pin mapping for the SPI connection.</p>
 
       <div class="annotation">
         <div class="a-arrow">&rarr; THE HARDEST BUG</div>
@@ -560,7 +568,7 @@
 
       <p>I also worked out the shielding approach for the load cell's cable: shield grounded at one end only, twisted with the signal return at the AD620 input, validated against a public overlanding project ("Tuck's Truck") using the same load cell and a similar amplifier setup.</p>
 
-      <div class="full-img">
+      <div class="full-img" style="max-width:420px;">
         <img src="assets/ascend/loadcell-breadboard.jpg" alt="The dual load cell amplifier and ADC circuit built on a breadboard, connected to a Raspberry Pi">
       </div>
       <p class="caption">The signal chain built out on a breadboard: both AD620 amplifier modules, the ADS1256 ADC, and the SPI connection back to the Pi.</p>
@@ -641,9 +649,9 @@
               <path d="M0,0 L8,4 L0,8 Z" fill="#3D6BFF"/>
             </marker>
           </defs>
-          <path d="M660 880 Q600 940 555 990" stroke="#3D6BFF" stroke-width="5" fill="none" marker-end="url(#thatsme-arrow)"/>
+          <path d="M700 890 Q660 925 630 958" stroke="#3D6BFF" stroke-width="5" fill="none" marker-end="url(#thatsme-arrow)"/>
         </svg>
-        <div class="hero-tag" style="left:60%; top:68%;">That's me!</div>
+        <div class="hero-tag" style="left:63%; top:70%;">That's me!</div>
       </div>
       <p class="caption">The ASCEND team, with the A-150 chassis and parafoil wing laid out for a field test.</p>
       <p><strong>Faculty Advisor:</strong> Christian Claudel</p>
@@ -716,7 +724,7 @@
       <p>Robot policies are increasingly controlled through natural language: you type or say what you want, and the robot does it. The problem is that human language is often vague in ways people don't notice: "grab that and put it over there" is completely clear in context to another human, and completely useless to a policy with no shared context. Together with teammates Daniel Milan and Cougar Seale, I set out to actually measure how much that vagueness hurts task performance, and whether it could be fixed automatically.</p>
       <p>We evaluated Physical Intelligence's <strong>&pi;0 ("Pi-Zero")</strong>, a pretrained, general-purpose vision-language-action policy, on pick-and-place tasks from the <strong>LIBERO-Object</strong> benchmark. To be clear about scope: we didn't build &pi;0 itself, we used it as our test subject, and built the evaluation framework and correction layer around it.</p>
 
-      <div class="full-img">
+      <div class="full-img" style="max-width:420px;">
         <img src="assets/fri/fig1-final.jpg" alt="Figure 1 from the paper: diagram showing language instructions and current observation feeding into the policy to produce a result">
       </div>
       <p class="caption">Fig. 1 from the paper. It shows the basic input given to the policy: a language instruction plus the current observation, producing a result.</p>
@@ -741,13 +749,13 @@
       <h2>Fixing it: an LLM in the loop</h2>
       <p>Since LIBERO-Object's tasks all reduce to one template, "Pick the [item] and place it in the basket," we tested whether an LLM could sit between the user and the policy, rewriting messy instructions into that clean form before &pi;0 ever saw them. We used <strong>Google's Gemini 2.0 Flash</strong> via its API, giving it the raw instruction plus the list of possible target items.</p>
 
-      <div class="full-img">
+      <div class="full-img" style="max-width:420px;">
         <img src="assets/fri/fig2-final.jpg" alt="Figure 2 from the paper: diagram showing the intermediate LLM layer revising a language instruction before it reaches the policy">
       </div>
       <p class="caption">Fig. 2 from the paper. The corrected pipeline: the LLM intercepts the raw instruction, cross-references it against the current observation, and hands the policy a clean, unambiguous instruction instead.</p>
       <p>It worked essentially perfectly: Gemini correctly identified the intended item in every single trial, across every ambiguity and relevance level we tested. The only exception was the fully-degenerate case (&sigma; = &eta; = 0), where no real information was present at all, and it correctly output "none of the above."</p>
 
-      <div style="max-width:280px; margin:20px auto;">
+      <div style="max-width:224px; margin:20px auto;">
         <img style="border-radius:6px; border:1px solid var(--line); width:100%; display:block;" src="assets/fri/fri-libero-sim.jpg" alt="LIBERO-Object simulation environment: a robot arm above a table with bowls, a plate, and a cabinet">
       </div>
       <p class="caption">The LIBERO-Object simulation environment: the robot arm, table, and objects used across every test case.</p>
@@ -826,7 +834,7 @@
       <p>I built this in <strong>Robosuite</strong>, on top of the <strong>MuJoCo</strong> physics engine. The deciding factor was contact accuracy. Rolling depends entirely on friction and contact dynamics in a way that pick-and-place or throwing tasks don't need to model at all, so the physics engine mattered a lot more here than it usually does.</p>
       <p>The first working environment placed a Sawyer arm and ball in Robosuite's default arena, ball held between the stock gripper's prongs. The second, more developed version dropped the default gripper entirely (my first successful attempt at modifying the Sawyer arm's own XML file) and moved to a clean arm-plus-table-plus-ball setup, which is what I built the custom end-effector integration on top of.</p>
 
-      <div class="full-img">
+      <div class="full-img" style="max-width:420px;">
         <img src="assets/sawyerroll/fig6-sim-env.jpg" alt="The final SawyerRoll simulation environment with the ball and target area marked">
       </div>
       <p class="caption">The final environment: Sawyer arm, ball, table, and a marked target area for the ball to roll into.</p>
