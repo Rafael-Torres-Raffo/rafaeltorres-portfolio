@@ -1159,16 +1159,20 @@
       <h2>The goal</h2>
       <p>The project's actual deliverable was a <strong>demonstration dataset</strong>: trajectory data collected across 15 long-horizon manipulation tasks in MS-HAB's SetTable benchmark, meant to train better downstream robot policies. That's the piece the lab could keep using. Getting there required solving a problem that turned out to be much deeper than expected, and became its own thread of the project: MS-HAB treats long-horizon tasks (setting a table) as chains of smaller learned skills, pick, place, open, close, navigate, each with its own pretrained policy, but the framework only lets you hand it a full task plan up front. Making it interactive instead, so a person could give commands one at a time in natural language and have the environment stay live and remember what had already happened, is what led to the goal-injection work below.</p>
 
-      <div class="video-slot">
-        <div class="vs-icon">&#9654;</div>
-        <div class="vs-label">VIDEO SLOT</div>
-        <p>Early ManiSkill exploration: single robot, parallelized environments, and the ReplicaCAD realistic-scene example.</p>
+      <div class="video-embed">
+        <iframe src="https://www.youtube-nocookie.com/embed/mUbdHKDad7w" title="SAPIEN engine fly-through of a ReplicaCAD apartment scene" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
+      <p class="caption">A slow camera fly-through of one of the ReplicaCAD apartment scenes in SAPIEN, the simulator MS-HAB runs on: kitchen, living room, layout, and lighting, before any task or policy runs on top of it.</p>
 
       <h2>Building the foundation</h2>
       <p>MS-HAB runs on top of <strong>SAPIEN</strong> (the same relationship Robosuite has to MuJoCo, which made the transition easier coming off SawyerRoll). Early on, I worked through how MS-HAB structures tasks: subtask types (<code>PickSubtask</code>, <code>PlaceSubtask</code>, <code>NavigateSubtask</code>, <code>OpenSubtask</code>, <code>CloseSubtask</code>), how articulated objects like drawers and fridges are configured, and how a full task plan chains them together.</p>
       <p>Building my first custom task (picking up a bowl, opening a drawer, placing the bowl inside) surfaced the first real lesson: the default sample code drove the robot with <code>env.action_space.sample()</code>, literally random actions. Nothing was actually being learned or decided; the robot just twitched randomly and happened to occasionally brush against something. The fix was switching to MS-HAB's <strong>pretrained policy checkpoints</strong>: a separate trained neural network for each individual skill (pick, place, open, close, navigate), each one already knowing what "correct" looks like for its specific job.</p>
       <p>I also spent real time reverse-engineering MS-HAB's coordinate system by trial and error: moving individual objects, re-running, and watching what changed, until I could reliably map which axis controlled depth into the counter, height, and lateral position. That sounds small, but every custom scene I built after this depended on it.</p>
+
+      <div class="full-img" style="max-width:420px;">
+        <img src="assets/memory/coordinate-system.png" alt="The MS-HAB coordinate system mapped onto the robot and scene: green X (lateral), red Y (depth), cyan Z (height) axes with their positive and negative directions labeled">
+      </div>
+      <p class="caption">Mapping the X (lateral), Y (depth), and Z (height) axes onto the scene by trial and error: exactly how much and which direction to move an object, like a bolt, into a drawer or onto a counter.</p>
 
       <div class="annotation">
         <div class="a-arrow">&rarr; WHY SMALL LLMS CAN'T HANDLE EVERYTHING</div>
