@@ -1240,6 +1240,13 @@
       </div>
       <p class="caption">Nine parallel environments (a 3&times;3 grid, same apartment scene and task) running the open-drawer subtask at once, mid data-collection run. Watch the green goal-injection indicator grow and lock onto the target as the robot navigates in.</p>
 
+      <p>Once the parallel pipeline was working, I used it to test other tasks too, not just the drawer sequence above.</p>
+
+      <div class="video-embed">
+        <iframe src="https://www.youtube-nocookie.com/embed/rEhcEREQ6ec" title="Nine parallel environments picking up a bowl and placing it on the counter" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p class="caption">The same nine-parallel setup running a different, manipulation-heavy task: pick bowl-3, place it on the counter, all nine successful. It runs closer to a minute instead of ten seconds because the robot stays near the target the whole time instead of navigating across the room. The green marker tracks the injected goal at each stage, the bowl during the pick, then the counter during the place, and that counter marker is deliberately large: the success region's size is tunable per task, and here it only mattered that the bowl landed somewhere on the counter, not exactly where.</p>
+
       <h2>Tech stack</h2>
       <div class="tags" style="margin:16px 0;">
         <span class="tag">ManiSkill-HAB</span><span class="tag">SAPIEN</span><span class="tag">SAC / PPO</span>
