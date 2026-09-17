@@ -1201,10 +1201,21 @@
       <h2>The breakthrough: dynamic goal injection</h2>
       <p>The only real options were: recreate the whole environment for every single command (correct, but a ~40-second physics-replay delay each time), or find a way to change the goal inside a live environment without recreating it. I found the second path. MS-HAB stores each subtask's target as an entry in an internal list (<code>subtask_objs[]</code>), and I discovered that directly mutating an existing entry doesn't work. The object wrapper's position is cached at creation and never updates. But <strong>replacing the entire wrapper</strong> with a freshly constructed one (via <code>Actor.create_from_entities()</code>, pointed at the new target) does work, and the environment picks it up immediately.</p>
 
-      <div class="video-slot">
-        <div class="vs-icon">&#9654;</div>
-        <div class="vs-label">VIDEO SLOT</div>
-        <p>Dynamic goal injection demo: switching the robot's target from bowl-0 to bowl-3 live, with no environment recreation.</p>
+      <p>The clearest demonstration of this: one continuous live session with the environment, split into two clips because it covers two sequential commands. The environment is never recreated between them, same simulation instance, same physics state, no ~40-second reload. One command finishes, the terminal prompts for the next goal, a new command goes in, and the robot starts working toward it immediately.</p>
+
+      <div class="video-embed">
+        <iframe src="https://www.youtube-nocookie.com/embed/8Dwj_kAl_r4" title="Live interactive session, part 1: first command" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p class="caption">Part 1 (cmd001): the first command in the session. The robot navigates across the kitchen scene toward its target, with the green goal indicator tracking correctly as it moves between the counter, sink, and cabinet areas.</p>
+
+      <div class="video-embed">
+        <iframe src="https://www.youtube-nocookie.com/embed/zJvb6cW2rIA" title="Live interactive session, part 2: second command" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p class="caption">Part 2 (cmd002): the second command, entered immediately after the first, in the same environment and session. The robot navigates toward the newly injected goal, with the marker again tracking it.</p>
+
+      <div class="annotation">
+        <div class="a-arrow">&rarr; WHAT THIS IS AND ISN'T SHOWING</div>
+        <p>This isn't presented as a flawless end-to-end success. It's evidence that the core interactive loop actually works: give a command, get a result, immediately give the next command without losing state or restarting the simulation. That loop is what took months to get right, independent of whether every subtask inside these two runs completed perfectly.</p>
       </div>
 
       <p>The result: per-command overhead dropped from about <strong>40 seconds down to under 1 second</strong>, with identical policy behavior. That single technique is what actually made an interactive, on-the-fly command loop feasible at all.</p>
