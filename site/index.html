@@ -390,7 +390,7 @@
     .proj-hero{height:auto; min-height:0;}
     #view-fri1 .proj-hero, #view-fri2 .proj-hero, #view-memory .proj-hero,
     #view-connect4 .proj-hero, #view-about .proj-hero{height:auto; min-height:0; aspect-ratio:1400/500;}
-    #view-ascend .proj-hero{height:auto; min-height:0; aspect-ratio:690/605;}
+    #view-ascend .proj-hero{height:auto; min-height:0; aspect-ratio:1/1;}
     #view-robotathon .proj-hero{height:auto; min-height:0; aspect-ratio:1100/619;}
 
     /* ---- tables: wrap instead of scroll ---- */
@@ -443,7 +443,7 @@
         <p class="lede">Electrical & Computer Engineering student with a Robotics minor at UT Austin. This is a running log of what I've built: mechanical, electrical, and everything soldered or scripted in between.</p>
         <div class="hero-meta">
           <div>MAJOR<span>ECE, Robotics Minor</span></div>
-          <div>FOCUS<span>Embedded systems, manipulation</span></div>
+          <div>FOCUS<span>Robotics, autonomous systems</span></div>
           <div>BASED<span>Austin, TX</span></div>
         </div>
       </div>
@@ -566,7 +566,7 @@
 
   <section class="view" id="view-ascend">
     <div class="proj-hero">
-      <img src="assets/ascend/cad-final.jpg" alt="CAD render of the A-150 paramotor drone under its parafoil wing" style="object-fit:contain; background:#EEF2F8;">
+      <img src="assets/ascend/ascend-texas-logo.png" alt="ASCEND Texas logo: a paraglider wing above the team name" style="object-fit:contain; background:#FFFFFF;">
       <div class="scrim"></div>
     </div>
     <div class="proj-hero-content">
@@ -1728,6 +1728,7 @@
     if(navEl) navEl.classList.add('active');
     window.scrollTo(0,0);
     closeNav();
+    if(history.replaceState) history.replaceState(null, '', '#' + name);
     if(name === 'robotathon'){
       requestAnimationFrame(() => requestAnimationFrame(drawConnector));
     }
@@ -1779,6 +1780,12 @@
 
   window.addEventListener('load', () => requestAnimationFrame(drawConnector));
   window.addEventListener('resize', drawConnector);
+
+  (function restoreViewFromHash(){
+    const validViews = ['home','projects','about','contact','robotathon','ascend','fri1','fri2','memory','connect4'];
+    const requested = location.hash.slice(1);
+    if(validViews.includes(requested)) showView(requested);
+  })();
 </script>
 
 </body>
